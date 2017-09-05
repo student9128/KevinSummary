@@ -6,18 +6,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:scrollbars="none"
     tools:openDrawer="start">
 
-    <include layout="@layout/tool_bar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/tool_bar" />
+
+        <Button
+            android:id="@+id/btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Btn" />
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/ic_avatar" />
+    </LinearLayout>
 
     <com.kevin.tech.kevinsummary.view.ScrimInsetsFrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/white"
         android:fitsSystemWindows="true"
-        android:scrollbars="none"
         app:insetForeground="#3000">
 
         <LinearLayout
@@ -33,7 +50,8 @@
                 android:layout_gravity="start"
                 android:layout_weight="1"
                 android:fitsSystemWindows="true"
-                android:scrollbars="none"
+                app:itemTextColor="@color/black"
+                app:itemIconTint="@color/colorPrimary"
                 app:headerLayout="@layout/nav_header_main"
                 app:menu="@menu/activity_main_drawer" />
 
@@ -43,8 +61,7 @@
                 android:background="@color/red_3"
                 android:padding="@dimen/padding_5"
                 android:text="上次使用时间：2017-08-28"
-                android:textColor="@color/white"
-                />
+                android:textColor="@color/white" />
         </LinearLayout>
     </com.kevin.tech.kevinsummary.view.ScrimInsetsFrameLayout>
 

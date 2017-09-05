@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@drawable/side_nav_bar"
+    android:background="@drawable/bg_side_nav_bar"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingBottom="@dimen/uniform_padding"
@@ -43,6 +43,7 @@
         android:paddingTop="@dimen/padding_5">
 
         <com.kevin.tech.kevinsummary.view.RoundedImageView
+            android:id="@+id/riv_git_hub"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:gravity="center_vertical"
@@ -52,6 +53,7 @@
             app:riv_oval="true" />
 
         <com.kevin.tech.kevinsummary.view.RoundedImageView
+            android:id="@+id/riv_csdn"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="@dimen/uniform_margin"
@@ -64,6 +66,7 @@
             app:riv_oval="true" />
 
         <com.kevin.tech.kevinsummary.view.RoundedImageView
+            android:id="@+id/riv_jian_shu"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="@dimen/uniform_margin"
@@ -76,6 +79,7 @@
             app:riv_oval="true" />
 
         <com.kevin.tech.kevinsummary.view.RoundedImageView
+            android:id="@+id/riv_segment_fault"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="@dimen/uniform_margin"

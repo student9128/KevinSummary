@@ -12,16 +12,20 @@
         <!--android:title="Gallery" />-->
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_avatar"
+            android:icon="@drawable/ic_account_circle"
             android:title="Kevin" />
+        <!--<item-->
+            <!--android:id="@+id/nav_manage"-->
+            <!--android:icon="@drawable/ic_menu_manage"-->
+            <!--android:title="工具" />-->
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="工具" />
+            android:id="@+id/nav_skin"
+            android:icon="@drawable/ic_menu_skin"
+            android:title="换肤" />
     </group>
-
-    <item android:title="互动">
+    <item android:title="帮助">
         <menu>
+
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
@@ -32,5 +36,4 @@
                 android:title="关于" />
         </menu>
     </item>
-
 </menu>

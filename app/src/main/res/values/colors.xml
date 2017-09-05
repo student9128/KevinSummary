@@ -3,8 +3,13 @@
     <color name="colorPrimary">#FF6C64</color>
     <color name="colorPrimaryDark">#FF5765</color>
     <color name="colorAccent">#FF6E40</color>
+    <color name="colorPrimary_night">#2196F3</color>
+    <color name="colorPrimaryDark_night">#1976D2</color>
+    <color name="colorAccent_night">#448AFF</color>
     <color name="white">#ffffff</color>
+    <color name="white_night">#ffffff</color>
     <color name="white_1">#F2F5F7</color>
+    <color name="white_1_night">#707070</color>
     <color name="black">#000000</color>
     <color name="gray">#707070</color>
     <color name="gray_1">#EEEEEE</color>
@@ -12,6 +17,7 @@
     <color name="gray_3">#F5F5F5</color>
     <color name="gray_10">#24292E</color>
     <color name="transparent">#00000000</color>
+    <color name="transparent_night">#00000000</color>
     <color name="bg">#3f3F51B5</color>
     <color name="teal">#009688</color>
     <color name="teal_1">#3EA87E</color>
@@ -32,10 +38,15 @@
     <color name="orange_1">#FFCD8E</color>
     <color name="blue_1">#48BAF5</color>
     <color name="pink">#FF6C64</color>
+    <color name="pink_night">#FFCD8E</color>
+    <color name="red_1_night">#48BAF5</color>
     <color name="red_1">#FF3E65</color>
+    <color name="pink_1_night">#FFCD8E</color>
     <color name="pink_1">#FF5765</color>
     <color name="pink_2">#EA6F5A</color>
 
     <color name="light_gray">#f0f0f0</color>
     <color name="light_white">#f5f5f5</color>
+
+
 </resources>
