@@ -3,8 +3,15 @@ package com.kevin.tech.kevinsummary.uitls;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+/**
+ * Created by <a href="http://blog.csdn.net/student9128">Kevin</a> for Project KevinSummary on 2017/9/8.
+ * <h3>Description:</h3>
+ * <div>
+ * SharedPreferences
+ * <div/>
+ */
 public class SPUtil {
-        public static final String TAG = "SPUtil";
+    public static final String TAG = "SPUtil";
     private static SharedPreferences mSP;
 
     public static String getStringSP(String key, Context context) {
@@ -40,7 +47,7 @@ public class SPUtil {
     public static Boolean getBooleanSPDefaultTrue(String key, Context context) {
         mSP = context.getSharedPreferences(key, Context.MODE_PRIVATE);
         boolean value = mSP.getBoolean(key, true);
-        LogK.d("Jingpeng", value + "");
+        LogK.d("Kevin", value + "");
         return value;
 
     }

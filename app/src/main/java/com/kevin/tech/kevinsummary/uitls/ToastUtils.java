@@ -123,6 +123,21 @@ public class ToastUtils {
         mKevinToast.setDuration(Toast.LENGTH_SHORT);
         mKevinToast.show();
     }
+    public static void showKevinLongToast(Context context, String message) {
+        if (mKevinToast == null) {
+            mKevinToast = new Toast(context);
+        }
+        LayoutInflater inflate = (LayoutInflater)
+                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflate.inflate(R.layout.layout_tip_toast, null);
+        mKevinToast.setView(v);
+        TextView tv = (TextView) v.findViewById(R.id.toast_text);
+        ImageView iv = (ImageView) v.findViewById(R.id.toast_image);
+        tv.setText(message);
+        iv.setImageResource(R.drawable.ic_record_voice);
+        mKevinToast.setDuration(Toast.LENGTH_LONG);
+        mKevinToast.show();
+    }
 
     /**
      * customize short toast with icon.

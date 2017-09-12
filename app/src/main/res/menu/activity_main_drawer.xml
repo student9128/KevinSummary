@@ -11,29 +11,32 @@
         <!--android:icon="@drawable/ic_menu_gallery"-->
         <!--android:title="Gallery" />-->
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_show"
             android:icon="@drawable/ic_account_circle"
-            android:title="Kevin" />
-        <!--<item-->
-            <!--android:id="@+id/nav_manage"-->
-            <!--android:icon="@drawable/ic_menu_manage"-->
-            <!--android:title="工具" />-->
+            android:title="I am Kevin" />
+        <item
+            android:id="@+id/nav_calendar"
+            android:icon="@drawable/ic_menu_calendar"
+            android:title="今天" />
+        <item
+            android:id="@+id/nav_last_time"
+            android:icon="@drawable/ic_nav_menu_past"
+            android:title="上次" />
         <item
             android:id="@+id/nav_skin"
             android:icon="@drawable/ic_menu_skin"
             android:title="换肤" />
     </group>
-    <item android:title="帮助">
-        <menu>
+    <group android:checkableBehavior="single">
 
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="分享" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="关于" />
-        </menu>
-    </item>
+
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_menu_share"
+            android:title="分享" />
+        <item
+            android:id="@+id/nav_send"
+            android:icon="@drawable/ic_menu_send"
+            android:title="关于" />
+    </group>
 </menu>

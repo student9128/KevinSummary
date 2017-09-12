@@ -1,33 +1,48 @@
 package com.kevin.tech.kevinsummary;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.animation.SpringAnimation;
 import android.support.animation.SpringForce;
 import android.support.annotation.NonNull;
 import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kevin.tech.kevinsummary.adapter.TabLayoutNewsFragmentAdapter;
+import com.kevin.tech.kevinsummary.base.BaseActivity;
+import com.kevin.tech.kevinsummary.fragment.AndroidFragment;
+import com.kevin.tech.kevinsummary.fragment.ThirdFragment;
+import com.kevin.tech.kevinsummary.uitls.ColorUtils;
+import com.kevin.tech.kevinsummary.uitls.DateUtils;
 import com.kevin.tech.kevinsummary.uitls.SPUtil;
 import com.kevin.tech.kevinsummary.uitls.ToastUtils;
+import com.kevin.tech.kevinsummary.view.NoSmoothViewPager;
 import com.kevin.tech.kevinsummary.view.RoundedImageView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import skin.support.SkinCompatManager;
 
-public class MainActivity extends AppCompatActivity implements DrawerLayout.DrawerListener, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements DrawerLayout.DrawerListener, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
 
     @BindView(R.id.tv_title)
     TextView tvTitle;
@@ -43,21 +58,53 @@ public class MainActivity extends AppCompatActivity implements DrawerLayout.Draw
     ImageView imageView;
     @BindView(R.id.btn)
     Button btn;
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
+    @BindView(R.id.ns_view_pager)
+    NoSmoothViewPager nsViewPager;
     private ActionBarDrawerToggle drawerToggle;
     private RoundedImageView linkGitHub;
     private RoundedImageView linkCSDN;
     private RoundedImageView linkJianShu;
     private RoundedImageView linkSegmentFault;
 
+    private List<Fragment> mFragments = new ArrayList<>();
+    private List<String> mTabList = new ArrayList<>();
+    private TabLayoutNewsFragmentAdapter mAdapter;
+
+    //灰色以及相对应的RGB值
+    private int mGrayColor;
+    private int mGrayRed;
+    private int mGrayGreen;
+    private int mGrayBlue;
+
+    private int mBlueColor;
+    private int mBlueRed;
+    private int mBlueGreen;
+    private int mBlueBlue;
+
+    private int mBlackColor;
+    private int mBlackRed;
+    private int mBlackGreen;
+    private int mBlackBlue;
+
+    private int mRedColor;
+    private int mRedRed;
+    private int mRedGreen;
+    private int mRedBlue;
+    private Boolean skin;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolBar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(null);
+        actionBar.setTitle("KS");
         toolBar.setNavigationIcon(R.drawable.ic_menu);
+        if (Build.VERSION.SDK_INT >= 21) {
+            toolBar.setElevation(0);
+        }
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolBar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerToggle.setDrawerIndicatorEnabled(true);
@@ -65,25 +112,74 @@ public class MainActivity extends AppCompatActivity implements DrawerLayout.Draw
 //        drawerToggle.syncState();//显示默认的三道杠图标
 //        drawerLayout.setDrawerListener(this);
         drawerLayout.addDrawerListener(this);
-        Boolean skin = SPUtil.getBooleanSP("skin", this);
+        skin = SPUtil.getBooleanSP("skin", this);
         if (skin) {//换肤了
+            tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.black_2), ContextCompat.getColor(this, R.color.colorPrimary_night));
+//            tabLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_title_color_night));
             drawerLayout.setStatusBarBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark_night));
         } else {//未换肤
+            tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.black_2), ContextCompat.getColor(this, R.color.colorPrimary));
+//            tabLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_title_color));
             drawerLayout.setStatusBarBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         }
 //        navView.setItemIconTintList(null);//可以让图标保持原有颜色
-        navView.setNavigationItemSelectedListener(this);
         hideNavigationViewScrollbar(navView);
         View headerView = navView.getHeaderView(0);
         linkGitHub = (RoundedImageView) headerView.findViewById(R.id.riv_git_hub);
         linkCSDN = (RoundedImageView) headerView.findViewById(R.id.riv_csdn);
         linkJianShu = (RoundedImageView) headerView.findViewById(R.id.riv_jian_shu);
         linkSegmentFault = (RoundedImageView) headerView.findViewById(R.id.riv_segment_fault);
+
+//        reduceMarginsInTabs(tabLayout, DisplayUtils.dip2px(this, 50));
+    }
+
+    @Override
+    public void initData() {
+        Menu navViewMenu = navView.getMenu();
+        MenuItem item = navViewMenu.findItem(R.id.nav_calendar);
+        item.setTitle("今天是" + DateUtils.getCurrentDate());
+        MenuItem item1 = navViewMenu.findItem(R.id.nav_last_time);
+        item1.setTitle("上次使用" + DateUtils.getCurrentDate());
+        initTabList();
+        initFragmentList();
+        mAdapter = new TabLayoutNewsFragmentAdapter(getSupportFragmentManager(),
+                this, mFragments, mTabList, skin);
+        nsViewPager.setAdapter(mAdapter);
+        nsViewPager.setCurrentItem(0);
+        tabLayout.setupWithViewPager(nsViewPager);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            tabLayout.getTabAt(i).setCustomView(mAdapter.getTabView(i));
+        }
+        initColor();
+    }
+
+    @Override
+    public void initListener() {
         linkGitHub.setOnClickListener(this);
         linkCSDN.setOnClickListener(this);
         linkJianShu.setOnClickListener(this);
         linkSegmentFault.setOnClickListener(this);
         btn.setOnClickListener(this);
+        tabLayout.addOnTabSelectedListener(this);
+        nsViewPager.addOnPageChangeListener(this);
+        navView.setNavigationItemSelectedListener(this);
+    }
+
+    private void initTabList() {
+        mTabList.clear();
+        mTabList.add("Android");
+        mTabList.add("第三方");
+    }
+
+    /**
+     * add Fragment
+     */
+    public void initFragmentList() {
+        mFragments.clear();
+        mFragments.add(AndroidFragment.newInstance("Android"));
+        mFragments.add(ThirdFragment.newInstance("第三方"));
+
     }
 
     @Override
@@ -92,14 +188,13 @@ public class MainActivity extends AppCompatActivity implements DrawerLayout.Draw
 
     @Override
     public void onDrawerOpened(View drawerView) {
-        ToastUtils.showKevinToast(this, "Open");
+        showToast("Open");
 
     }
 
     @Override
     public void onDrawerClosed(View drawerView) {
-        ToastUtils.showKevinToast(this, "Closed");
-
+        showToast("Closed");
     }
 
     @Override
@@ -128,12 +223,37 @@ public class MainActivity extends AppCompatActivity implements DrawerLayout.Draw
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_about:
+                showToast("关于");
+                break;
+            case R.id.action_settings:
+                showToast("设置");
+                break;
+            case R.id.action_share:
+                showToast("分享");
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.riv_git_hub:
                 drawerLayout.closeDrawers();
                 Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
                 intent.putExtra("url", getString(R.string.github));
+                intent.putExtra("sign", "github");
                 startActivity(intent);
                 break;
             case R.id.riv_csdn:
@@ -169,15 +289,26 @@ public class MainActivity extends AppCompatActivity implements DrawerLayout.Draw
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int selectedTabPosition = tabLayout.getSelectedTabPosition();
+        View customView = tabLayout.getTabAt(selectedTabPosition).getCustomView();
+        TextView viewById = (TextView) customView.findViewById(R.id.tv_tab_text);
         switch (item.getItemId()) {
             case R.id.nav_skin:
+                drawerLayout.closeDrawers();
                 SPUtil.setSP("skin", MainActivity.this, true);
+                viewById.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary_night));
+                tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.black_2), ContextCompat.getColor(this, R.color.colorPrimary_night));
+//                tabLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_title_color_night));
                 drawerLayout.setStatusBarBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark_night));
                 SkinCompatManager.getInstance().loadSkin("night", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN);
                 ToastUtils.showKevinToast(MainActivity.this, "Skin");
                 break;
             case R.id.nav_send:
+                drawerLayout.closeDrawers();
+                viewById.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
                 SPUtil.setSP("skin", MainActivity.this, false);
+                tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.black_2), ContextCompat.getColor(this, R.color.colorPrimary));
+//                tabLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_title_color));
                 drawerLayout.setStatusBarBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
                 SkinCompatManager.getInstance().restoreDefaultTheme();
                 break;
@@ -186,4 +317,162 @@ public class MainActivity extends AppCompatActivity implements DrawerLayout.Draw
         }
         return true;
     }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        setTabSelectedState(tab);
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+        setTabUnSelectedState(tab);
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        if (positionOffset > 0) {
+//            printLogd("Position:===============\t" + position);
+            TabLayout.Tab tabAt = tabLayout.getTabAt(position);
+            TabLayout.Tab tabAt1 = tabLayout.getTabAt(position + 1);
+
+            View customView1 = tabAt1.getCustomView();
+            TextView tabText1 = (TextView) customView1.findViewById(R.id.tv_tab_text);
+
+            View customView = tabAt.getCustomView();
+            TextView tabText = (TextView) customView.findViewById(R.id.tv_tab_text);
+            if (SPUtil.getBooleanSP("skin", MainActivity.this)) {
+                tabText.setTextColor(switchBlue2Black(positionOffset));
+                tabText1.setTextColor(switchBlack2Blue(positionOffset));
+            } else {
+                tabText.setTextColor(switchRed2Black(positionOffset));
+                tabText1.setTextColor(switchBlack2Red(positionOffset));
+            }
+
+        }
+    }
+
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    private void setTabSelectedState(TabLayout.Tab tab) {
+        View customView = tab.getCustomView();
+        TextView tabText = (TextView) customView.findViewById(R.id.tv_tab_text);
+        if (SPUtil.getBooleanSP("skin", MainActivity.this)) {
+            tabText.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary_night));
+        } else {
+            tabText.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        }
+        String s = tabText.getText().toString();
+    }
+
+    private void setTabUnSelectedState(TabLayout.Tab tab) {
+        View customView = tab.getCustomView();
+        TextView tabText = (TextView) customView.findViewById(R.id.tv_tab_text);
+        tabText.setTextColor(ContextCompat.getColor(this, R.color.black_2));
+        String s = tabText.getText().toString();
+    }
+
+
+    private void initColor() {
+        mRedColor = ColorUtils.getColor(this, R.color.colorPrimary);
+        mRedRed = ColorUtils.getColorRed(mRedColor);
+        mRedGreen = ColorUtils.getColorGreen(mRedColor);
+        mRedBlue = ColorUtils.getColorBlue(mRedColor);
+
+        mBlueColor = ColorUtils.getColor(this, R.color.colorPrimary_night);
+        mBlueRed = ColorUtils.getColorRed(mBlueColor);
+        mBlueGreen = ColorUtils.getColorGreen(mBlueColor);
+        mBlueBlue = ColorUtils.getColorBlue(mBlueColor);
+
+        mBlackColor = ColorUtils.getColor(this, R.color.black_2);
+        mBlackRed = Color.red(mBlackColor);
+        mBlackGreen = Color.green(mBlackColor);
+        mBlackBlue = Color.blue(mBlackColor);
+    }
+
+    /**
+     * offset from 0 to 1
+     *
+     * @param positionOffset
+     * @return
+     */
+    private int switchRed2Black(float positionOffset) {
+        int red = ColorUtils.switchARGB(mRedRed, mBlackRed, positionOffset);
+        int green = ColorUtils.switchARGB(mRedGreen, mBlackGreen, positionOffset);
+        int blue = ColorUtils.switchARGB(mRedBlue, mBlackBlue, positionOffset);
+        return ColorUtils.switchColor(red, green, blue);
+    }
+
+    private int switchBlack2Red(float positionOffset) {
+        int red = ColorUtils.switchARGB(mBlackRed, mRedRed, positionOffset);
+        int green = ColorUtils.switchARGB(mBlackGreen, mRedGreen, positionOffset);
+        int blue = ColorUtils.switchARGB(mBlackBlue, mRedBlue, positionOffset);
+        return ColorUtils.switchColor(red, green, blue);
+    }
+
+    private int switchBlue2Black(float positionOffset) {
+        int red = ColorUtils.switchARGB(mBlueRed, mBlackRed, positionOffset);
+        int green = ColorUtils.switchARGB(mBlueGreen, mBlackGreen, positionOffset);
+        int blue = ColorUtils.switchARGB(mBlueBlue, mBlackBlue, positionOffset);
+        return ColorUtils.switchColor(red, green, blue);
+    }
+
+    private int switchBlack2Blue(float positionOffset) {
+        int red = ColorUtils.switchARGB(mBlackRed, mBlueRed, positionOffset);
+        int green = ColorUtils.switchARGB(mBlackGreen, mBlueGreen, positionOffset);
+        int blue = ColorUtils.switchARGB(mBlackBlue, mBlueBlue, positionOffset);
+        return ColorUtils.switchColor(red, green, blue);
+    }
+
+
+    /**
+     * offset from 0 to 1
+     *
+     * @param offset
+     * @return
+     */
+    private int getGreen2Black(float offset) {
+        int red = (int) (offset * (mBlackRed - mBlueRed) + mBlueRed);
+        int green = (int) (offset * (mBlackGreen - mBlueGreen) + mBlueGreen);
+        int blue = (int) (offset * (mBlackBlue - mBlueBlue) + mBlueBlue);
+        return Color.argb(255, red, green, blue);
+    }
+
+    private int getBlack2Green(float offset) {
+        int red = (int) (offset * (mBlueRed - mBlackRed) + mBlackRed);
+        int green = (int) (offset * (mBlueGreen - mBlackGreen) + mBlackGreen);
+        int blue = (int) (offset * (mBlueBlue - mBlackBlue) + mBlackBlue);
+        return Color.argb(255, red, green, blue);
+    }
+
+    public static void reduceMarginsInTabs(TabLayout tabLayout, int marginOffset) {
+
+        View tabStrip = tabLayout.getChildAt(0);
+        if (tabStrip instanceof ViewGroup) {
+            ViewGroup tabStripGroup = (ViewGroup) tabStrip;
+            for (int i = 0; i < ((ViewGroup) tabStrip).getChildCount(); i++) {
+                View tabView = tabStripGroup.getChildAt(i);
+                if (tabView.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+                    ((ViewGroup.MarginLayoutParams) tabView.getLayoutParams()).leftMargin = marginOffset;
+                    ((ViewGroup.MarginLayoutParams) tabView.getLayoutParams()).rightMargin = marginOffset;
+                }
+            }
+
+            tabLayout.requestLayout();
+        }
+    }
+
 }

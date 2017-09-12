@@ -32,4 +32,8 @@
             <enum name="mirror" value="2" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="AnyTextView">
+        <attr name="typeface" format="string"/>
+    </declare-styleable>
 </resources>
