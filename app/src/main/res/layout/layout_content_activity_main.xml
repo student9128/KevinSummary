@@ -24,7 +24,7 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="@drawable/bg_title_color"
             android:elevation="@dimen/elevation_5"
             app:tabIndicatorHeight="@null"
             app:tabTextAppearance="@style/TabTextAppearanceStyle"></android.support.design.widget.TabLayout>

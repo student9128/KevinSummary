@@ -33,7 +33,6 @@ public abstract class BaseActivity extends AppBaseActivity {
         initListener();
     }
 
-
     public abstract void initView();
 
     public abstract void initData();
@@ -68,7 +67,6 @@ public abstract class BaseActivity extends AppBaseActivity {
      * 切换日夜间模式后进行刷新界面，写到initView()方法的最后
      */
 //    public abstract void refreshUI();
-
     private void initTheme() {
 //        if (mDayNightHelper.isDay()) {
 //            setTheme(R.style.DayTheme);

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">KevinSummary</string>
     <string name="short_name">KS</string>
+    <string name="about_3rd">第三方及参考文章</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -12,4 +13,61 @@
     <string name="csdn">http://blog.csdn.net/student9128</string>
     <string name="jianshu">http://www.jianshu.com/u/904da1b86270</string>
     <string name="segment_fault">https://segmentfault.com/u/student9128/articles</string>
+    <string-array name="about_title">
+        <item>Android-skin-support</item>
+    </string-array>
+    <string-array name="about_text">
+        <item>https://github.com/ximsfei/Android-skin-support</item>
+    </string-array>
+    <string-array name="component_item">
+        <item>Activity</item>
+        <item>BroadCastReceiver</item>
+        <item>Service</item>
+        <item>ContentProvider</item>
+    </string-array>
+    <string-array name="widget_item">
+        <item>TextView</item>
+        <item>ListView</item>
+        <item>RecyclerView</item>
+        <item>CardView</item>
+    </string-array>
+    <string-array name="material_item">
+        <item>Toolbar</item>
+        <item>DrawerLayout</item>
+        <item>NavigationView</item>
+        <item>Snackbar</item>
+        <item> BottomNavigationBar</item>
+        <item> TextInputLayout</item>
+        <item>TextInputEditText</item>
+        <item>CoordinatorLayout</item>
+    </string-array>
+    <string-array name="third_item">
+        <item>信鸽推送</item>
+        <item>极光推送</item>
+        <item>百度推送</item>
+        <item>小米推送</item>
+        <item>友盟推送</item>
+        <item>ShareSDK</item>
+        <item>友盟分享</item>
+        <item>极光分享</item>
+        <item>Mob短信验证码</item>
+        <item>友盟应用统计</item>
+        <item>腾讯Bugly</item>
+        <item>百度地图</item>
+        <item>高德地图</item>
+
+    </string-array>
+    <string-array name="tools_item">
+        <item>Picasso</item>
+        <item>Glide</item>
+        <item>Volley</item>
+        <item>OKHttp</item>
+        <item>Retrofit</item>
+    </string-array>
+    <string-array name="item">
+        <item>四大组件</item>
+        <item>控件</item>
+        <item>布局</item>
+        <item>材料设计</item>
+    </string-array>
 </resources>

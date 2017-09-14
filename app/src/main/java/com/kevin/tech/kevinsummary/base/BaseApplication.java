@@ -1,7 +1,14 @@
 package com.kevin.tech.kevinsummary.base;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
+
+import java.util.List;
 
 import skin.support.SkinCompatManager;
 import skin.support.app.SkinCardViewInflater;
@@ -18,6 +25,7 @@ import skin.support.design.app.SkinMaterialViewInflater;
 
 public class BaseApplication extends Application {
     private static Context mContext;
+    public static int stateCount;
 
 
     public static Context getContext() {
@@ -39,5 +47,94 @@ public class BaseApplication extends Application {
                 .setSkinStatusBarColorEnable(true)                     // 关闭状态栏换肤，默认打开[可选]
 //                .setSkinWindowBackgroundEnable(false)                   // 关闭windowBackground换肤，默认打开[可选]
                 .loadSkin();
+    }
+
+    public static boolean isBackground(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            if (appProcess.processName.equals(context.getPackageName())) {
+                if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_BACKGROUND) {
+                    Log.i("后台", appProcess.processName);
+                    return true;
+                } else {
+                    Log.i("前台", appProcess.processName);
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 判断当前应用程序处于前台还是后台
+     * 需要权限
+     */
+    public static boolean isApplicationBroughtToBackground(final Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
+        if (!tasks.isEmpty()) {
+            ComponentName topActivity = tasks.get(0).topActivity;
+            if (!topActivity.getPackageName().equals(context.getPackageName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void initActivityLife() {
+        this.registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                stateCount++;
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+                stateCount--;
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+
+            }
+        });
+    }
+
+    /*
+    在某些情景下依旧没办法使用，上面这种方式是在Activity-onStop后进行自减，
+    如果我们是监听锁屏后在屏幕暗下后做处理，我们的App在屏幕暗下之前仍处于前台，
+    在得到锁屏通知之后这个时候判断自己的App是否处于前后台，得到的结果会是我们的应用处于后台。
+    因为我们在监听锁屏系统广播Screen-on or Screen off.，在收到Screen off.的时候,
+    我们的App的处于栈顶的Activity已经onStop了。所以得不到正确的结果
+     */
+    public static int isBackground() {
+        if (BaseApplication.stateCount == 0) {
+            //后台
+            return 0;
+        } else {
+            //前台
+            return 1;
+        }
     }
 }

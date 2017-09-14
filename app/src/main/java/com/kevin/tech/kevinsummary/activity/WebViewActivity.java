@@ -1,14 +1,19 @@
-package com.kevin.tech.kevinsummary;
+package com.kevin.tech.kevinsummary.activity;
 
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.kevin.tech.kevinsummary.R;
+import com.kevin.tech.kevinsummary.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,15 +26,27 @@ import butterknife.ButterKnife;
  */
 
 
-public class WebViewActivity extends AppCompatActivity {
+public class WebViewActivity extends BaseActivity {
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.iv_function)
+    ImageView ivFunction;
+    @BindView(R.id.tool_bar)
+    Toolbar toolBar;
     @BindView(R.id.web_view)
     WebView webView;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_web_view);
         ButterKnife.bind(this);
+        setSupportActionBar(toolBar);
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Blog");
+        toolBar.setNavigationIcon(R.drawable.ic_close_activity);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+
         Intent intent = getIntent();
         if (Build.VERSION.SDK_INT >= 21) {
             View decorView = getWindow().getDecorView();
@@ -54,8 +71,37 @@ public class WebViewActivity extends AppCompatActivity {
 //                startActivity(intent);
                 return true;
             }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                actionBar.setTitle(view.getTitle());
+            }
         });
         String url = intent.getStringExtra("url");
         webView.loadUrl(url);
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initListener() {
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                break;
+        }
+        return true;
+//        return super.onOptionsItemSelected(item);
     }
 }

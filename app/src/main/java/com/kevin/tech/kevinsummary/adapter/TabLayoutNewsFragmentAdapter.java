@@ -70,13 +70,13 @@ public class TabLayoutNewsFragmentAdapter extends FragmentPagerAdapter {
         if (0 == position) {//the default color of item home is green
             if (isSkin) {
 
-                mTabTitle.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary_night));
+                mTabTitle.setTextColor(ContextCompat.getColor(mContext, R.color.white));
             } else {
-                mTabTitle.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+                mTabTitle.setTextColor(ContextCompat.getColor(mContext, R.color.white));
 
             }
         } else {
-            mTabTitle.setTextColor(ContextCompat.getColor(mContext, R.color.black_2));
+            mTabTitle.setTextColor(ContextCompat.getColor(mContext, R.color.white_1));
         }
         return view;
     }

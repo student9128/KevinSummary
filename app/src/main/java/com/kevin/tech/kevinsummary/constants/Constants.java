@@ -10,4 +10,5 @@ package com.kevin.tech.kevinsummary.constants;
 
 public class Constants {
     public static final String ARGS = "args";
+    public static final String KEY_SIGN = "sign";
 }

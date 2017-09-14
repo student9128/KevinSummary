@@ -1,6 +1,7 @@
-package com.kevin.tech.kevinsummary;
+package com.kevin.tech.kevinsummary.activity;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.animation.SpringAnimation;
@@ -16,6 +17,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,15 +29,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kevin.tech.kevinsummary.R;
 import com.kevin.tech.kevinsummary.adapter.TabLayoutNewsFragmentAdapter;
 import com.kevin.tech.kevinsummary.base.BaseActivity;
+import com.kevin.tech.kevinsummary.constants.Constants;
 import com.kevin.tech.kevinsummary.fragment.AndroidFragment;
+import com.kevin.tech.kevinsummary.fragment.ComponentFragment;
+import com.kevin.tech.kevinsummary.fragment.MaterialFragment;
 import com.kevin.tech.kevinsummary.fragment.ThirdFragment;
+import com.kevin.tech.kevinsummary.fragment.ToolFragment;
 import com.kevin.tech.kevinsummary.uitls.ColorUtils;
 import com.kevin.tech.kevinsummary.uitls.DateUtils;
 import com.kevin.tech.kevinsummary.uitls.SPUtil;
 import com.kevin.tech.kevinsummary.uitls.ToastUtils;
 import com.kevin.tech.kevinsummary.view.NoSmoothViewPager;
+import com.kevin.tech.kevinsummary.view.RotateAnimation;
 import com.kevin.tech.kevinsummary.view.RoundedImageView;
 
 import java.util.ArrayList;
@@ -67,6 +78,7 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
     private RoundedImageView linkCSDN;
     private RoundedImageView linkJianShu;
     private RoundedImageView linkSegmentFault;
+    private ImageView ivSign;
 
     private List<Fragment> mFragments = new ArrayList<>();
     private List<String> mTabList = new ArrayList<>();
@@ -115,11 +127,11 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         skin = SPUtil.getBooleanSP("skin", this);
         if (skin) {//换肤了
             tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.black_2), ContextCompat.getColor(this, R.color.colorPrimary_night));
-//            tabLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_title_color_night));
+            tabLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_title_color_night));
             drawerLayout.setStatusBarBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark_night));
         } else {//未换肤
             tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.black_2), ContextCompat.getColor(this, R.color.colorPrimary));
-//            tabLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_title_color));
+            tabLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_title_color));
             drawerLayout.setStatusBarBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         }
 //        navView.setItemIconTintList(null);//可以让图标保持原有颜色
@@ -129,6 +141,7 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         linkCSDN = (RoundedImageView) headerView.findViewById(R.id.riv_csdn);
         linkJianShu = (RoundedImageView) headerView.findViewById(R.id.riv_jian_shu);
         linkSegmentFault = (RoundedImageView) headerView.findViewById(R.id.riv_segment_fault);
+        ivSign = (ImageView) headerView.findViewById(R.id.iv_sign);
 
 //        reduceMarginsInTabs(tabLayout, DisplayUtils.dip2px(this, 50));
     }
@@ -137,9 +150,26 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
     public void initData() {
         Menu navViewMenu = navView.getMenu();
         MenuItem item = navViewMenu.findItem(R.id.nav_calendar);
-        item.setTitle("今天是" + DateUtils.getCurrentDate());
+        SpannableString spanText = new SpannableString("今天是:" + DateUtils.getCurrentDate());
+        spanText.setSpan(new ForegroundColorSpan(Color.RED), 4, spanText.length(),
+                Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        item.setTitle(spanText);
         MenuItem item1 = navViewMenu.findItem(R.id.nav_last_time);
-        item1.setTitle("上次使用" + DateUtils.getCurrentDate());
+        String signDate = SPUtil.getStringSP(Constants.KEY_SIGN, this);
+        if (!TextUtils.isEmpty(signDate)) {
+            if (DateUtils.getCurrentDate().equals(signDate)) {
+                ivSign.setImageResource(R.drawable.ic_signed);
+            } else {
+                ivSign.setImageResource(R.drawable.ic_sign);
+            }
+            item1.setTitle("上次签到:" + signDate);
+        } else {
+            ivSign.setImageResource(R.drawable.ic_sign);
+            SpannableString spanText1 = new SpannableString("上次签到:还未签到");
+            spanText1.setSpan(new ForegroundColorSpan(Color.RED), 5, spanText1.length(),
+                    Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            item1.setTitle(spanText1);
+        }
         initTabList();
         initFragmentList();
         mAdapter = new TabLayoutNewsFragmentAdapter(getSupportFragmentManager(),
@@ -147,7 +177,7 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         nsViewPager.setAdapter(mAdapter);
         nsViewPager.setCurrentItem(0);
         tabLayout.setupWithViewPager(nsViewPager);
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             tabLayout.getTabAt(i).setCustomView(mAdapter.getTabView(i));
         }
@@ -156,6 +186,7 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
 
     @Override
     public void initListener() {
+        ivSign.setOnClickListener(this);
         linkGitHub.setOnClickListener(this);
         linkCSDN.setOnClickListener(this);
         linkJianShu.setOnClickListener(this);
@@ -168,8 +199,11 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
 
     private void initTabList() {
         mTabList.clear();
-        mTabList.add("Android");
-        mTabList.add("第三方");
+        mTabList.add("Components");
+        mTabList.add("Widget");
+        mTabList.add("MaterialDesign");
+        mTabList.add("3rdParty");
+        mTabList.add("Tools");
     }
 
     /**
@@ -177,8 +211,11 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
      */
     public void initFragmentList() {
         mFragments.clear();
-        mFragments.add(AndroidFragment.newInstance("Android"));
-        mFragments.add(ThirdFragment.newInstance("第三方"));
+        mFragments.add(ComponentFragment.newInstance("Components"));
+        mFragments.add(AndroidFragment.newInstance("Widget"));
+        mFragments.add(MaterialFragment.newInstance("MaterialDesign"));
+        mFragments.add(ThirdFragment.newInstance("3rdParty"));
+        mFragments.add(ToolFragment.newInstance("Tools"));
 
     }
 
@@ -188,13 +225,12 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
 
     @Override
     public void onDrawerOpened(View drawerView) {
-        showToast("Open");
 
     }
 
     @Override
     public void onDrawerClosed(View drawerView) {
-        showToast("Closed");
+
     }
 
     @Override
@@ -233,6 +269,7 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         switch (item.getItemId()) {
             case R.id.action_about:
                 showToast("关于");
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
             case R.id.action_settings:
                 showToast("设置");
@@ -249,11 +286,29 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.iv_sign:
+//                showToast("Sign");
+                String signDate = SPUtil.getStringSP(Constants.KEY_SIGN, this);
+                if (!TextUtils.isEmpty(signDate)) {
+                    if (DateUtils.getCurrentDate().equals(signDate)) {
+                        showToast("今日已签");
+                    } else {
+                        RotateAnimation rotateAnimation = new RotateAnimation(ivSign,
+                                BitmapFactory.decodeResource(getResources(), R.drawable.ic_signed));
+                        ivSign.startAnimation(rotateAnimation);
+                        SPUtil.setSP("sign", this, DateUtils.getCurrentDate());
+                    }
+                } else {
+                    RotateAnimation rotateAnimation = new RotateAnimation(ivSign,
+                            BitmapFactory.decodeResource(getResources(), R.drawable.ic_signed));
+                    ivSign.startAnimation(rotateAnimation);
+                    SPUtil.setSP("sign", this, DateUtils.getCurrentDate());
+                }
+                break;
             case R.id.riv_git_hub:
                 drawerLayout.closeDrawers();
                 Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
                 intent.putExtra("url", getString(R.string.github));
-                intent.putExtra("sign", "github");
                 startActivity(intent);
                 break;
             case R.id.riv_csdn:
@@ -296,19 +351,19 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
             case R.id.nav_skin:
                 drawerLayout.closeDrawers();
                 SPUtil.setSP("skin", MainActivity.this, true);
-                viewById.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary_night));
-                tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.black_2), ContextCompat.getColor(this, R.color.colorPrimary_night));
-//                tabLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_title_color_night));
+                viewById.setTextColor(ContextCompat.getColor(this, R.color.white));
+                tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.white_1), ContextCompat.getColor(this, R.color.white));
+                tabLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_title_color_night));
                 drawerLayout.setStatusBarBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark_night));
                 SkinCompatManager.getInstance().loadSkin("night", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN);
                 ToastUtils.showKevinToast(MainActivity.this, "Skin");
                 break;
             case R.id.nav_send:
                 drawerLayout.closeDrawers();
-                viewById.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+                viewById.setTextColor(ContextCompat.getColor(this, R.color.white));
                 SPUtil.setSP("skin", MainActivity.this, false);
-                tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.black_2), ContextCompat.getColor(this, R.color.colorPrimary));
-//                tabLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_title_color));
+                tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.white_1), ContextCompat.getColor(this, R.color.white));
+                tabLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_title_color));
                 drawerLayout.setStatusBarBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
                 SkinCompatManager.getInstance().restoreDefaultTheme();
                 break;
@@ -371,9 +426,9 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         View customView = tab.getCustomView();
         TextView tabText = (TextView) customView.findViewById(R.id.tv_tab_text);
         if (SPUtil.getBooleanSP("skin", MainActivity.this)) {
-            tabText.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary_night));
+            tabText.setTextColor(ContextCompat.getColor(this, R.color.white));
         } else {
-            tabText.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+            tabText.setTextColor(ContextCompat.getColor(this, R.color.white));
         }
         String s = tabText.getText().toString();
     }
@@ -381,23 +436,23 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
     private void setTabUnSelectedState(TabLayout.Tab tab) {
         View customView = tab.getCustomView();
         TextView tabText = (TextView) customView.findViewById(R.id.tv_tab_text);
-        tabText.setTextColor(ContextCompat.getColor(this, R.color.black_2));
+        tabText.setTextColor(ContextCompat.getColor(this, R.color.white_1));
         String s = tabText.getText().toString();
     }
 
 
     private void initColor() {
-        mRedColor = ColorUtils.getColor(this, R.color.colorPrimary);
+        mRedColor = ColorUtils.getColor(this, R.color.white);
         mRedRed = ColorUtils.getColorRed(mRedColor);
         mRedGreen = ColorUtils.getColorGreen(mRedColor);
         mRedBlue = ColorUtils.getColorBlue(mRedColor);
 
-        mBlueColor = ColorUtils.getColor(this, R.color.colorPrimary_night);
+        mBlueColor = ColorUtils.getColor(this, R.color.white);
         mBlueRed = ColorUtils.getColorRed(mBlueColor);
         mBlueGreen = ColorUtils.getColorGreen(mBlueColor);
         mBlueBlue = ColorUtils.getColorBlue(mBlueColor);
 
-        mBlackColor = ColorUtils.getColor(this, R.color.black_2);
+        mBlackColor = ColorUtils.getColor(this, R.color.white_1);
         mBlackRed = Color.red(mBlackColor);
         mBlackGreen = Color.green(mBlackColor);
         mBlackBlue = Color.blue(mBlackColor);
@@ -474,5 +529,6 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
             tabLayout.requestLayout();
         }
     }
+
 
 }

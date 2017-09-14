@@ -20,6 +20,15 @@
         app:riv_border_width="1px"
         app:riv_oval="true" />
 
+    <ImageView
+        android:id="@+id/iv_sign"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/margin_50"
+        android:layout_marginTop="-20dp"
+        android:src="@drawable/ic_sign" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,6 +38,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="@dimen/textSize24"
         android:textStyle="bold" />
+
 
     <LinearLayout
         android:id="@+id/ll_blog_group"
