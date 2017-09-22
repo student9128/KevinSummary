@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.kevin.tech.kevinsummary.view.widget.KListView
+            android:id="@+id/klv_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></com.kevin.tech.kevinsummary.view.widget.KListView>
+    </LinearLayout>
+</ScrollView>

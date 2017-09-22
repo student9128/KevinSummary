@@ -4,7 +4,6 @@ import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.graphics.EmbossMaskFilter;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -30,7 +29,6 @@ import com.kevin.tech.kevinsummary.base.BaseActivity;
 import com.kevin.tech.kevinsummary.view.widget.ExpandableTextView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by <a href="http://blog.csdn.net/student9128">Kevin</a> for Project KevinSummary on 2017/9/14.
@@ -218,10 +216,4 @@ public class TextViewActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

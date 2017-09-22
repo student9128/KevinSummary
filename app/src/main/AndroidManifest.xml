@@ -37,6 +37,7 @@
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.widget.TextViewActivity" />
+        <activity android:name=".activity.widget.ListViewActivity" />
 
         <!-- Mob ShareSdk -->
 

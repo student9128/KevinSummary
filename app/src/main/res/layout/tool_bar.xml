@@ -11,6 +11,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/bg_title_color"
         android:elevation="@dimen/elevation_15"
+        android:theme="@style/ToolbarStyle"
         app:navigationIcon="@drawable/ic_back"
         app:popupTheme="@style/Theme.AppCompat.Light"
         app:titleTextAppearance="@style/ToolbarText">

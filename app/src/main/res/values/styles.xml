@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/white_3</item>
         <item name="android:windowAnimationStyle">@style/Activity_Animation</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
     <style name="BaseTheme" parent="AppTheme"></style>
@@ -24,6 +25,11 @@
     <style name="TabTextAppearanceStyle" parent="TextAppearance.AppCompat">
         <!--<item name="android:textStyle">bold</item>-->
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
     </style>
 
     <style name="ToolbarText" parent="android:Widget.TextView">

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.kevin.tech.kevinsummary.R;
 import com.kevin.tech.kevinsummary.activity.OnItemClickListener;
+import com.kevin.tech.kevinsummary.activity.widget.ListViewActivity;
 import com.kevin.tech.kevinsummary.activity.widget.TextViewActivity;
 import com.kevin.tech.kevinsummary.adapter.RecyclerViewAdapter;
 import com.kevin.tech.kevinsummary.base.BaseFragment;
@@ -79,12 +80,12 @@ public class AndroidFragment extends BaseFragment implements OnItemClickListener
 
     @Override
     public void onRecyclerClick(int position) {
-        showToast("点击了" + stringArray[position]);
         switch (position) {
             case 0:
                 startActivity(new Intent(mActivity, TextViewActivity.class));
                 break;
             case 1:
+                startActivity(new Intent(mActivity, ListViewActivity.class));
                 break;
             default:
                 break;

@@ -6,8 +6,8 @@
     <!--android:endColor="@color/red_1"-->
     <!--android:startColor="@color/pink" />-->
     <gradient
-        android:centerColor="@color/colorPrimaryDark"
+        android:centerColor="@color/colorPrimary"
         android:endColor="@color/colorPrimary"
-        android:startColor="@color/teal_1" />
+        android:startColor="@color/colorPrimary" />
 
 </shape>

@@ -22,7 +22,7 @@ import java.util.List;
  * <div/>
  */
 
-public class TabLayoutNewsFragmentAdapter extends FragmentPagerAdapter {
+public class TabLayoutAdapter extends FragmentPagerAdapter {
     private Context mContext;
     private List<Fragment> mFragments;
     private List<String> mTabList;
@@ -32,12 +32,12 @@ public class TabLayoutNewsFragmentAdapter extends FragmentPagerAdapter {
     private ImageView mTabIcon, mTabIconFill;
     private TextView mTabTitle;
 
-    public TabLayoutNewsFragmentAdapter(FragmentManager fm) {
+    public TabLayoutAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public TabLayoutNewsFragmentAdapter(FragmentManager fm, Context context, List<Fragment> fragments,
-                                        List<String> tabList, boolean isSkin) {
+    public TabLayoutAdapter(FragmentManager fm, Context context, List<Fragment> fragments,
+                            List<String> tabList, boolean isSkin) {
         super(fm);
         this.mContext = context;
         this.mFragments = fragments;

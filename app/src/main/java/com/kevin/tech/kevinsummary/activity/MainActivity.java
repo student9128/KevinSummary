@@ -21,6 +21,7 @@ import android.text.SpannableString;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +31,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kevin.tech.kevinsummary.R;
-import com.kevin.tech.kevinsummary.adapter.TabLayoutNewsFragmentAdapter;
+import com.kevin.tech.kevinsummary.adapter.TabLayoutAdapter;
 import com.kevin.tech.kevinsummary.base.BaseActivity;
 import com.kevin.tech.kevinsummary.constants.Constants;
 import com.kevin.tech.kevinsummary.fragment.AndroidFragment;
@@ -51,7 +52,7 @@ import java.util.List;
 import butterknife.BindView;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
-public class MainActivity extends BaseActivity implements DrawerLayout.DrawerListener, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener, DrawerLayout.DrawerListener {
 
     @BindView(R.id.tv_title)
     TextView tvTitle;
@@ -80,7 +81,7 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
 
     private List<Fragment> mFragments = new ArrayList<>();
     private List<String> mTabList = new ArrayList<>();
-    private TabLayoutNewsFragmentAdapter mAdapter;
+    private TabLayoutAdapter mAdapter;
 
     //灰色以及相对应的RGB值
     private int mGrayColor;
@@ -120,9 +121,11 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerToggle.setHomeAsUpIndicator(R.drawable.ic_menu);
+
 //        drawerToggle.syncState();//显示默认的三道杠图标
-//        drawerLayout.setDrawerListener(this);
-        drawerLayout.addDrawerListener(this);
+        drawerLayout.setDrawerListener(this);
+//        drawerLayout.setScrimColor(Color.TRANSPARENT);//drawerLayout滑出是侧边的阴影
+//        drawerLayout.addDrawerListener(this);
 //        navView.setItemIconTintList(null);//可以让图标保持原有颜色
         hideNavigationViewScrollbar(navView);
         View headerView = navView.getHeaderView(0);
@@ -176,7 +179,7 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         }
         initTabList();
         initFragmentList();
-        mAdapter = new TabLayoutNewsFragmentAdapter(getSupportFragmentManager(),
+        mAdapter = new TabLayoutAdapter(getSupportFragmentManager(),
                 this, mFragments, mTabList, skin);
         nsViewPager.setAdapter(mAdapter);
         nsViewPager.setCurrentItem(0);
@@ -199,6 +202,17 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         tabLayout.addOnTabSelectedListener(this);
         nsViewPager.addOnPageChangeListener(this);
         navView.setNavigationItemSelectedListener(this);
+        //让DrawerLayout从右边滑出
+//        toolBar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+//                    drawerLayout.closeDrawer(Gravity.RIGHT);
+//                } else {
+//                    drawerLayout.openDrawer(Gravity.RIGHT);
+//                }
+//            }
+//        });
     }
 
     private void initTabList() {
@@ -291,6 +305,13 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case android.R.id.home:
+                if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+                    drawerLayout.closeDrawer(Gravity.RIGHT);
+                } else {
+                    drawerLayout.openDrawer(Gravity.RIGHT);
+                }
+                break;
             case R.id.iv_sign:
 //                showToast("Sign");
                 String signDate = SPUtil.getStringSP(Constants.KEY_SIGN, this);

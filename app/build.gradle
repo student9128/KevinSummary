@@ -28,12 +28,6 @@ android {
             storeFile file(RELEASE_STORE_FILE)
             storePassword RELEASE_STORE_PASSWORD
         }
-        debug {
-            keyAlias RELEASE_KEY_ALIAS
-            keyPassword RELEASE_KEY_PASSWORD
-            storeFile file(RELEASE_STORE_FILE)
-            storePassword RELEASE_STORE_PASSWORD
-        }
     }
     compileSdkVersion 26
     buildToolsVersion '26.0.1'
@@ -52,8 +46,8 @@ android {
             signingConfig signingConfigs.release
         }
         debug {
-            signingConfig signingConfigs.release
-            minifyEnabled false
+//            signingConfig signingConfigs.release
+//            minifyEnabled false
         }
     }
 }
