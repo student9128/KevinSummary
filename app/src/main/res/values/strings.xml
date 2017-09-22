@@ -5,6 +5,9 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!--ExpandableTextView-->
+    <string name="expand_string">more</string>
+    <string name="collapsed_string">less</string>
 
     <string name="action_settings">设置</string>
     <string name="action_about">关于</string>
@@ -15,9 +18,13 @@
     <string name="segment_fault">https://segmentfault.com/u/student9128/articles</string>
     <string-array name="about_title">
         <item>Android-skin-support</item>
+        <item>ExpandableTextView——Chen-Sir</item>
+        <item>ExpandableTextView——Manabu-GT</item>
     </string-array>
     <string-array name="about_text">
         <item>https://github.com/ximsfei/Android-skin-support</item>
+        <item>https://github.com/Chen-Sir/ExpandableTextView</item>
+        <item>https://github.com/Manabu-GT/ExpandableTextView</item>
     </string-array>
     <string-array name="component_item">
         <item>Activity</item>
@@ -70,4 +77,12 @@
         <item>布局</item>
         <item>材料设计</item>
     </string-array>
+    <string name="test_string">
+        Android provides a powerful clipboard-based framework for copying and pasting. It supports
+        both simple and complex data types, including text strings, complex data structures, text
+        and binary stream data, and even application assets. Simple text data is stored directly in
+        the clipboard, while complex data is stored as a reference that the pasting application
+        resolves with a content provider. Copying and pasting works both within an application and
+        between applications that implement the framework.
+    </string>
 </resources>

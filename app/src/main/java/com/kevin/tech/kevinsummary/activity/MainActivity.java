@@ -14,11 +14,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
@@ -41,7 +41,6 @@ import com.kevin.tech.kevinsummary.fragment.ToolFragment;
 import com.kevin.tech.kevinsummary.uitls.ColorUtils;
 import com.kevin.tech.kevinsummary.uitls.DateUtils;
 import com.kevin.tech.kevinsummary.uitls.SPUtil;
-import com.kevin.tech.kevinsummary.uitls.ToastUtils;
 import com.kevin.tech.kevinsummary.view.NoSmoothViewPager;
 import com.kevin.tech.kevinsummary.view.RotateAnimation;
 import com.kevin.tech.kevinsummary.view.RoundedImageView;
@@ -50,8 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import skin.support.SkinCompatManager;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 public class MainActivity extends BaseActivity implements DrawerLayout.DrawerListener, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
 
@@ -107,11 +105,12 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
     private Boolean skin;
 
     @Override
+    public int setLayoutResId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
     public void initView() {
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        setSupportActionBar(toolBar);
-        ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("KS");
         toolBar.setNavigationIcon(R.drawable.ic_menu);
         if (Build.VERSION.SDK_INT >= 21) {
@@ -124,6 +123,21 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
 //        drawerToggle.syncState();//显示默认的三道杠图标
 //        drawerLayout.setDrawerListener(this);
         drawerLayout.addDrawerListener(this);
+//        navView.setItemIconTintList(null);//可以让图标保持原有颜色
+        hideNavigationViewScrollbar(navView);
+        View headerView = navView.getHeaderView(0);
+        linkGitHub = (RoundedImageView) headerView.findViewById(R.id.riv_git_hub);
+        linkCSDN = (RoundedImageView) headerView.findViewById(R.id.riv_csdn);
+        linkJianShu = (RoundedImageView) headerView.findViewById(R.id.riv_jian_shu);
+        linkSegmentFault = (RoundedImageView) headerView.findViewById(R.id.riv_segment_fault);
+        ivSign = (ImageView) headerView.findViewById(R.id.iv_sign);
+        skin = SPUtil.getBooleanSP("skin", this);
+//        reduceMarginsInTabs(tabLayout, DisplayUtils.dip2px(this, 50));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         skin = SPUtil.getBooleanSP("skin", this);
         if (skin) {//换肤了
             tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.black_2), ContextCompat.getColor(this, R.color.colorPrimary_night));
@@ -134,16 +148,6 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
             tabLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_title_color));
             drawerLayout.setStatusBarBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         }
-//        navView.setItemIconTintList(null);//可以让图标保持原有颜色
-        hideNavigationViewScrollbar(navView);
-        View headerView = navView.getHeaderView(0);
-        linkGitHub = (RoundedImageView) headerView.findViewById(R.id.riv_git_hub);
-        linkCSDN = (RoundedImageView) headerView.findViewById(R.id.riv_csdn);
-        linkJianShu = (RoundedImageView) headerView.findViewById(R.id.riv_jian_shu);
-        linkSegmentFault = (RoundedImageView) headerView.findViewById(R.id.riv_segment_fault);
-        ivSign = (ImageView) headerView.findViewById(R.id.iv_sign);
-
-//        reduceMarginsInTabs(tabLayout, DisplayUtils.dip2px(this, 50));
     }
 
     @Override
@@ -268,14 +272,15 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_about:
-                showToast("关于");
                 startActivity(new Intent(this, AboutActivity.class));
                 break;
             case R.id.action_settings:
-                showToast("设置");
+                startActivity(new Intent(this, SettingActivity.class));
                 break;
             case R.id.action_share:
                 showToast("分享");
+                showShare();
+//                shareQ();
                 break;
             default:
                 break;
@@ -348,25 +353,7 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         View customView = tabLayout.getTabAt(selectedTabPosition).getCustomView();
         TextView viewById = (TextView) customView.findViewById(R.id.tv_tab_text);
         switch (item.getItemId()) {
-            case R.id.nav_skin:
-                drawerLayout.closeDrawers();
-                SPUtil.setSP("skin", MainActivity.this, true);
-                viewById.setTextColor(ContextCompat.getColor(this, R.color.white));
-                tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.white_1), ContextCompat.getColor(this, R.color.white));
-                tabLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_title_color_night));
-                drawerLayout.setStatusBarBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark_night));
-                SkinCompatManager.getInstance().loadSkin("night", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN);
-                ToastUtils.showKevinToast(MainActivity.this, "Skin");
-                break;
-            case R.id.nav_send:
-                drawerLayout.closeDrawers();
-                viewById.setTextColor(ContextCompat.getColor(this, R.color.white));
-                SPUtil.setSP("skin", MainActivity.this, false);
-                tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.white_1), ContextCompat.getColor(this, R.color.white));
-                tabLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_title_color));
-                drawerLayout.setStatusBarBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-                SkinCompatManager.getInstance().restoreDefaultTheme();
-                break;
+
             default:
                 break;
         }
@@ -430,14 +417,22 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         } else {
             tabText.setTextColor(ContextCompat.getColor(this, R.color.white));
         }
-        String s = tabText.getText().toString();
+        TextPaint tp = tabText.getPaint();
+        tp.setFakeBoldText(true);
+//        tabText.setScaleX(1.1f);
+        tabText.setScaleY(1.1f);
+
     }
 
     private void setTabUnSelectedState(TabLayout.Tab tab) {
         View customView = tab.getCustomView();
         TextView tabText = (TextView) customView.findViewById(R.id.tv_tab_text);
         tabText.setTextColor(ContextCompat.getColor(this, R.color.white_1));
-        String s = tabText.getText().toString();
+        TextPaint tp = tabText.getPaint();
+        tp.setFakeBoldText(false);
+
+//        tabText.setScaleX(1.0f);
+        tabText.setScaleY(1.0f);
     }
 
 
@@ -530,5 +525,33 @@ public class MainActivity extends BaseActivity implements DrawerLayout.DrawerLis
         }
     }
 
+    private void showShare() {
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+
+        // 分享时Notification的图标和文字  2.5.9以后的版本不     调用此方法
+        //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
+        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+        oks.setTitle(getString(R.string.app_name));
+//        // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+        oks.setTitleUrl(getString(R.string.csdn));
+//        // text是分享文本，所有平台都需要这个字段
+        oks.setText("A app for Android Learning");
+        oks.setImageUrl("https://github.com/student9128/KevinSummary/raw/0deb24b7368876f6dcb1f1eb00d4692024db9c94/app/src/main/res/mipmap-xxhdpi/ic_launcher.png");
+//        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+//        oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+//        // url仅在微信（包括好友和朋友圈）中使用
+//        oks.setUrl("http://sharesdk.cn");
+//        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+//        oks.setComment("我是测试评论文本");
+//        // site是分享此内容的网站名称，仅在QQ空间使用
+//        oks.setSite(getString(R.string.app_name));
+//        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+//        oks.setSiteUrl("http://sharesdk.cn");
+
+        // 启动分享GUI
+        oks.show(this);
+    }
 
 }

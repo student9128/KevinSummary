@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kevin.tech.kevinsummary.R;
+import com.kevin.tech.kevinsummary.activity.OnItemClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -83,11 +84,10 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MyViewHolder
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
-
     private OnItemClickListener listener;
 
-    public interface OnItemClickListener {
-        void onRecyclerClick(int position);
-    }
+//    public interface OnItemClickListener {
+//        void onRecyclerClick(int position);
+//    }
 
 }

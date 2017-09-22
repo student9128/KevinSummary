@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -48,6 +49,7 @@ public class TabLayoutNewsFragmentAdapter extends FragmentPagerAdapter {
     public void upDateSkin(boolean isSkin) {
         this.isSkin = isSkin;
     }
+
     @Override
     public Fragment getItem(int position) {
         return mFragments.get(position);
@@ -67,6 +69,7 @@ public class TabLayoutNewsFragmentAdapter extends FragmentPagerAdapter {
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_news_fragment_tab_view, null);
         mTabTitle = (TextView) view.findViewById(R.id.tv_tab_text);
         mTabTitle.setText(mTabList.get(position));
+        TextPaint tp = mTabTitle.getPaint();
         if (0 == position) {//the default color of item home is green
             if (isSkin) {
 
@@ -75,8 +78,11 @@ public class TabLayoutNewsFragmentAdapter extends FragmentPagerAdapter {
                 mTabTitle.setTextColor(ContextCompat.getColor(mContext, R.color.white));
 
             }
+            mTabTitle.setScaleY(1.1f);
+            tp.setFakeBoldText(true);
         } else {
             mTabTitle.setTextColor(ContextCompat.getColor(mContext, R.color.white_1));
+            tp.setFakeBoldText(false);
         }
         return view;
     }

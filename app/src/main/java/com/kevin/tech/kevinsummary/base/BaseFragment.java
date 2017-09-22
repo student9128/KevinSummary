@@ -1,16 +1,11 @@
 package com.kevin.tech.kevinsummary.base;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.kevin.tech.kevinsummary.R;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -91,16 +86,5 @@ public abstract class BaseFragment extends AppBaseFragment {
 
     //===============Some Methods=================//
 
-    /**
-     * 刷新 StatusBar
-     */
-    public void refreshStatusBar() {
-        if (Build.VERSION.SDK_INT >= 21) {
-            TypedValue typedValue = new TypedValue();
-            Resources.Theme theme = mActivity.getTheme();
-            theme.resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
-            mActivity.getWindow().setStatusBarColor(getResources().getColor(typedValue.resourceId));
-        }
-    }
 
 }

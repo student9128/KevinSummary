@@ -8,6 +8,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.kevin.tech.kevinsummary.constants.Constants;
+import com.mob.MobSDK;
+
 import java.util.List;
 
 import skin.support.SkinCompatManager;
@@ -47,6 +50,8 @@ public class BaseApplication extends Application {
                 .setSkinStatusBarColorEnable(true)                     // 关闭状态栏换肤，默认打开[可选]
 //                .setSkinWindowBackgroundEnable(false)                   // 关闭windowBackground换肤，默认打开[可选]
                 .loadSkin();
+
+        MobSDK.init(this, Constants.MOB_APP_KEY, Constants.MOB_APP_SECRET);
     }
 
     public static boolean isBackground(Context context) {

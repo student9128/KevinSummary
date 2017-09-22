@@ -1,21 +1,17 @@
 package com.kevin.tech.kevinsummary.activity;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.kevin.tech.kevinsummary.R;
 import com.kevin.tech.kevinsummary.adapter.AboutAdapter;
 import com.kevin.tech.kevinsummary.base.BaseActivity;
-import com.kevin.tech.kevinsummary.view.AnyTextView;
 import com.kevin.tech.kevinsummary.view.widget.DividerItemDecoration;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by <a href="http://blog.csdn.net/student9128">Kevin</a> for Project KevinSummary on 2017/9/14.
@@ -25,13 +21,7 @@ import butterknife.ButterKnife;
  */
 
 
-public class AboutActivity extends BaseActivity implements AboutAdapter.OnItemClickListener {
-    @BindView(R.id.tv_title)
-    AnyTextView tvTitle;
-    @BindView(R.id.iv_function)
-    ImageView ivFunction;
-    @BindView(R.id.tool_bar)
-    Toolbar toolBar;
+public class AboutActivity extends BaseActivity implements OnItemClickListener {
     @BindView(R.id.iv_logo)
     ImageView ivLogo;
     @BindView(R.id.rv_recycler_view)
@@ -41,15 +31,13 @@ public class AboutActivity extends BaseActivity implements AboutAdapter.OnItemCl
     private String[] stringTitle;
 
     @Override
+    public int setLayoutResId() {
+        return R.layout.activity_about;
+    }
+
+    @Override
     public void initView() {
-        setContentView(R.layout.activity_about);
-        ButterKnife.bind(this);
-        setSupportActionBar(toolBar);
-        ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("关于");
-//        toolBar.setNavigationIcon(R.drawable.ic_close_activity);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
 
         stringText = getResources().getStringArray(R.array.about_text);
         stringTitle = getResources().getStringArray(R.array.about_title);

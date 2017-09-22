@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kevin.tech.kevinsummary.R;
+import com.kevin.tech.kevinsummary.activity.OnItemClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,8 +40,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         holder.textView.setText(strings[position]);
+        holder.textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onRecyclerClick(position);
+                }
+            }
+        });
     }
 
     @Override
@@ -60,4 +69,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             ButterKnife.bind(this, itemView);
         }
     }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    private OnItemClickListener listener;
 }

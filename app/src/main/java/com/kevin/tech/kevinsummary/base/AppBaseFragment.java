@@ -58,11 +58,11 @@ public class AppBaseFragment extends Fragment {
 //===============Tools=================//
 
     public void showToast(String message) {
-        ToastUtils.showToast(mActivity, message);
+        ToastUtils.showKevinToast(mActivity, message);
     }
 
     public void showLongToast(String message) {
-        ToastUtils.showLongToast(mActivity, message);
+        ToastUtils.showKevinLongToast(mActivity, message);
     }
 
     public void printLoge(String str) {

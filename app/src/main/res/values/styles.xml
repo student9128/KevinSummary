@@ -6,7 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/white_1</item>
+        <item name="android:windowBackground">@color/white_3</item>
+        <item name="android:windowAnimationStyle">@style/Activity_Animation</item>
     </style>
 
     <style name="BaseTheme" parent="AppTheme"></style>
@@ -29,5 +30,33 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/textSize20</item>
         <item name="android:fontFamily">OpenSans-SemiBold.ttf</item>
+    </style>
+
+    <style name="Activity_Animation">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+    </style>
+
+    <style name="OverflowMenuStyle" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
+        <!-- 是否覆盖锚点，默认为true，即盖住Toolbar -->
+        <item name="overlapAnchor">false</item>
+        <!-- 弹出层背景颜色 -->
+        <!--<item name="android:popupBackground">@color/white</item>-->
+        <!-- 弹出层垂直方向上的偏移，即在竖直方向上距离Toolbar的距离，值为负则会盖住Toolbar -->
+        <item name="android:dropDownVerticalOffset">4dp</item>
+        <!-- 弹出层水平方向上的偏移，即距离屏幕左边的距离，负值会导致右边出现空隙 -->
+        <item name="android:dropDownHorizontalOffset">-1dp</item>
+    </style>
+    <!-- TextViewActivity-->
+    <style name="activity_text_view_style">
+        <item name="android:textSize">@dimen/textSize18</item>
+        <item name="android:paddingTop">@dimen/padding_5</item>
+        <item name="android:paddingBottom">@dimen/padding_5</item>
+        <item name="android:paddingLeft">@dimen/uniform_padding</item>
+        <item name="android:paddingRight">@dimen/uniform_padding</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 </resources>

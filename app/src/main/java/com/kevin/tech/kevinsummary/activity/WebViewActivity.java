@@ -2,21 +2,19 @@ package com.kevin.tech.kevinsummary.activity;
 
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 
 import com.kevin.tech.kevinsummary.R;
 import com.kevin.tech.kevinsummary.base.BaseActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by <a href="http://blog.csdn.net/student9128">Kevin</a> for Project KevinSummary on 2017/8/31.
@@ -27,25 +25,26 @@ import butterknife.ButterKnife;
 
 
 public class WebViewActivity extends BaseActivity {
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.iv_function)
-    ImageView ivFunction;
-    @BindView(R.id.tool_bar)
-    Toolbar toolBar;
+    //    @BindView(R.id.tv_title)
+//    TextView tvTitle;
+//    @BindView(R.id.iv_function)
+//    ImageView ivFunction;
+//    @BindView(R.id.tool_bar)
+//    Toolbar toolBar;
     @BindView(R.id.web_view)
     WebView webView;
+    @BindView(R.id.pb_progress_bar)
+    ProgressBar progressBar;
+
+    @Override
+    public int setLayoutResId() {
+        return R.layout.activity_web_view;
+    }
 
     @Override
     public void initView() {
-        setContentView(R.layout.activity_web_view);
-        ButterKnife.bind(this);
-        setSupportActionBar(toolBar);
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Blog");
+//        actionBar.setTitle("Blog");
         toolBar.setNavigationIcon(R.drawable.ic_close_activity);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
 
         Intent intent = getIntent();
         if (Build.VERSION.SDK_INT >= 21) {
@@ -78,6 +77,20 @@ public class WebViewActivity extends BaseActivity {
                 actionBar.setTitle(view.getTitle());
             }
         });
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress == 100) {
+//                    progressBar.setVisibility(View.GONE);
+                    progressBar.setAlpha(0);
+                } else {
+                    progressBar.setAlpha(1);
+                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setProgress(newProgress);
+                }
+            }
+        });
+
         String url = intent.getStringExtra("url");
         webView.loadUrl(url);
     }
@@ -93,10 +106,19 @@ public class WebViewActivity extends BaseActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_web_view, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                break;
+            case R.id.action_share:
+                showToast("分享");
                 break;
             default:
                 break;

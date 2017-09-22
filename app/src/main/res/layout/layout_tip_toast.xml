@@ -5,10 +5,10 @@
     android:background="@drawable/bg_customize_toast"
     android:gravity="center"
     android:orientation="horizontal"
-    android:paddingBottom="10dp"
+    android:paddingBottom="@dimen/padding_10"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
-    android:paddingTop="10dp">
+    android:paddingTop="@dimen/padding_10">
 
     <ImageView
         android:id="@+id/toast_image"

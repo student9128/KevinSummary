@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/tool_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <!--第一种-->
+            <com.kevin.tech.kevinsummary.view.widget.ExpandableTextView
+                android:id="@+id/etv_expandable_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentTextColor="@color/colorPrimary"
+                app:maxCollapsedLines="4"></com.kevin.tech.kevinsummary.view.widget.ExpandableTextView>
+            <!--第二种-->
+            <com.ms.square.android.expandabletextview.ExpandableTextView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/expand_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                expandableTextView:animDuration="200"
+                expandableTextView:maxCollapsedLines="4">
+
+                <TextView
+                    android:id="@id/expandable_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#666666"
+                    android:textSize="16sp" />
+
+                <ImageButton
+                    android:id="@id/expand_collapse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|bottom"
+                    android:background="@android:color/transparent"
+                    android:padding="16dp" />
+            </com.ms.square.android.expandabletextview.ExpandableTextView>
+
+            <TextView
+                android:id="@+id/text_view_1"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_2"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_3"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_4"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_5"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_6"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_7"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_8"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_9"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_10"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_11"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_12"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_13"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_14"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_15"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_16"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_17"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_18"
+                style="@style/activity_text_view_style" />
+
+            <TextView
+                android:id="@+id/text_view_19"
+                style="@style/activity_text_view_style" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
