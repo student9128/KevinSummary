@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.kevin.tech.kevinsummary.R;
-import com.kevin.tech.kevinsummary.activity.OnItemClickListener;
+import com.kevin.tech.kevinsummary.listener.OnItemClickListener;
 import com.kevin.tech.kevinsummary.activity.widget.ListViewActivity;
 import com.kevin.tech.kevinsummary.activity.widget.TextViewActivity;
 import com.kevin.tech.kevinsummary.adapter.RecyclerViewAdapter;
@@ -63,7 +63,7 @@ public class AndroidFragment extends BaseFragment implements OnItemClickListener
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mActivity, DividerItemDecoration.VERTICAL_LIST);
         dividerItemDecoration.setDivider(R.drawable.bg_divider_recycler);
         rvRecyclerView.addItemDecoration(dividerItemDecoration);
-        mAdapter = new RecyclerViewAdapter(mActivity, stringArray);
+        mAdapter = new RecyclerViewAdapter(mActivity, stringArray, false);
         rvRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
     }
@@ -91,4 +91,5 @@ public class AndroidFragment extends BaseFragment implements OnItemClickListener
                 break;
         }
     }
+
 }

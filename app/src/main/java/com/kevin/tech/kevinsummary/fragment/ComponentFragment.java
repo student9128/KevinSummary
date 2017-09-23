@@ -61,7 +61,7 @@ public class ComponentFragment extends BaseFragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mActivity, DividerItemDecoration.VERTICAL_LIST);
         dividerItemDecoration.setDivider(R.drawable.bg_divider_recycler);
         rvRecyclerView.addItemDecoration(dividerItemDecoration);
-        mAdapter = new RecyclerViewAdapter(mActivity, stringArray);
+        mAdapter = new RecyclerViewAdapter(mActivity, stringArray,false);
         rvRecyclerView.setAdapter(mAdapter);
     }
 

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.kevin.tech.kevinsummary.R;
 import com.kevin.tech.kevinsummary.adapter.AboutAdapter;
 import com.kevin.tech.kevinsummary.base.BaseActivity;
+import com.kevin.tech.kevinsummary.listener.OnItemClickListener;
 import com.kevin.tech.kevinsummary.view.widget.DividerItemDecoration;
 
 import butterknife.BindView;
@@ -77,4 +78,5 @@ public class AboutActivity extends BaseActivity implements OnItemClickListener {
         intent.putExtra("url", stringText[position]);
         startActivity(intent);
     }
+
 }

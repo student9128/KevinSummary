@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kevin.tech.kevinsummary.R;
-import com.kevin.tech.kevinsummary.activity.OnItemClickListener;
+import com.kevin.tech.kevinsummary.listener.OnItemClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

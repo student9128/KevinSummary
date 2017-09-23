@@ -12,10 +12,13 @@
     <string name="action_settings">设置</string>
     <string name="action_about">关于</string>
     <string name="action_share">分享</string>
+    <string name="action_open_in_browser">在浏览器中打开</string>
+    <string name="action_copy_url">复制链接</string>
     <string name="github">https://github.com/student9128</string>
     <string name="csdn">http://blog.csdn.net/student9128</string>
     <string name="jianshu">http://www.jianshu.com/u/904da1b86270</string>
     <string name="segment_fault">https://segmentfault.com/u/student9128/articles</string>
+    <string name="icon_url">https://github.com/student9128/KevinSummary/raw/0deb24b7368876f6dcb1f1eb00d4692024db9c94/app/src/main/res/mipmap-xxhdpi/ic_launcher.png</string>
     <!--第三方SDK的集成-->
     <string-array name="site_3rd_party">
         <item name="site_xgpush">http://blog.csdn.net/student9128/article/details/52264367</item>

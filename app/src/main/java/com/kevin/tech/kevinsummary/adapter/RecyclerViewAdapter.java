@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kevin.tech.kevinsummary.R;
-import com.kevin.tech.kevinsummary.activity.OnItemClickListener;
+import com.kevin.tech.kevinsummary.listener.OnItemClickListener;
+import com.kevin.tech.kevinsummary.listener.OnShowEffectListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,10 +27,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private Context context;
     private String[] strings;
+    private boolean showAction;
 
-    public RecyclerViewAdapter(Context context, String[] strings) {
+    public RecyclerViewAdapter(Context context, String[] strings, boolean showAction) {
         this.context = context;
         this.strings = strings;
+        this.showAction = showAction;
     }
 
     @Override
@@ -50,6 +53,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
             }
         });
+        holder.textAction.setText("查看效果");
+        holder.textAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (showEffectListener != null) {
+                    showEffectListener.showEffectActivity(position);
+                }
+            }
+        });
+        if (showAction) {
+            holder.viewLine.setVisibility(View.VISIBLE);
+            holder.textAction.setVisibility(View.VISIBLE);
+        } else {
+            holder.viewLine.setVisibility(View.GONE);
+            holder.textAction.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -63,6 +82,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         @BindView(R.id.item_text)
         TextView textView;
+        @BindView(R.id.item_action)
+        TextView textAction;
+
+        @BindView(R.id.view_line)
+        View viewLine;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -70,9 +94,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
+    private OnItemClickListener listener;
+
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
-    private OnItemClickListener listener;
+    private OnShowEffectListener showEffectListener;
+
+    public void setOnShowEffectListener(OnShowEffectListener l) {
+        this.showEffectListener = l;
+    }
+
+
 }

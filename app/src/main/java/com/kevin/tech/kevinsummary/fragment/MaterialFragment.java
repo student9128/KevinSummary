@@ -4,17 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.TextView;
 
 import com.kevin.tech.kevinsummary.R;
-import com.kevin.tech.kevinsummary.activity.OnItemClickListener;
 import com.kevin.tech.kevinsummary.activity.WebViewActivity;
 import com.kevin.tech.kevinsummary.adapter.RecyclerViewAdapter;
 import com.kevin.tech.kevinsummary.base.BaseFragment;
 import com.kevin.tech.kevinsummary.constants.Constants;
+import com.kevin.tech.kevinsummary.listener.OnItemClickListener;
+import com.kevin.tech.kevinsummary.listener.OnShowEffectListener;
 import com.kevin.tech.kevinsummary.view.widget.DividerItemDecoration;
 
 import butterknife.BindView;
@@ -27,7 +25,7 @@ import butterknife.BindView;
  */
 
 
-public class MaterialFragment extends BaseFragment implements OnItemClickListener {
+public class MaterialFragment extends BaseFragment implements OnItemClickListener, OnShowEffectListener {
     @BindView(R.id.text)
     TextView text;
     @BindView(R.id.rv_recycler_view)
@@ -51,20 +49,20 @@ public class MaterialFragment extends BaseFragment implements OnItemClickListene
     public void initView() {
         Bundle bundle = getArguments();
         String string = bundle.getString(Constants.ARGS);
-        text.setText(string);
+        text.setText("点击左侧进入文章内容，点击查看效果进入效果界面...。。。。。。。。。。。。。。。");
 
-        RotateAnimation rotateAnimation = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, Animation.RELATIVE_TO_SELF);
-        rotateAnimation.setDuration(1000);
-        rotateAnimation.setRepeatCount(100);
-        rotateAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        text.setAnimation(rotateAnimation);
-        rotateAnimation.startNow();
+//        RotateAnimation rotateAnimation = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, Animation.RELATIVE_TO_SELF);
+//        rotateAnimation.setDuration(1000);
+//        rotateAnimation.setRepeatCount(100);
+//        rotateAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+//        text.setAnimation(rotateAnimation);
+//        rotateAnimation.startNow();
         String[] stringArray = getResources().getStringArray(R.array.material_item);
         rvRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mActivity, DividerItemDecoration.VERTICAL_LIST);
         dividerItemDecoration.setDivider(R.drawable.bg_divider_recycler);
         rvRecyclerView.addItemDecoration(dividerItemDecoration);
-        mAdapter = new RecyclerViewAdapter(mActivity, stringArray);
+        mAdapter = new RecyclerViewAdapter(mActivity, stringArray, true);
         rvRecyclerView.setAdapter(mAdapter);
     }
 
@@ -76,6 +74,7 @@ public class MaterialFragment extends BaseFragment implements OnItemClickListene
     @Override
     public void initListener() {
         mAdapter.setOnItemClickListener(this);
+        mAdapter.setOnShowEffectListener(this);
     }
 
     @Override
@@ -85,6 +84,11 @@ public class MaterialFragment extends BaseFragment implements OnItemClickListene
         intent.putExtra("url", stringArray[position]);
         startActivity(intent);
 
+    }
+
+    @Override
+    public void showEffectActivity(int position) {
+        showToast("展示效果" + position);
     }
 }
 
