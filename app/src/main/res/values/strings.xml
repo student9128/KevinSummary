@@ -16,11 +16,29 @@
     <string name="csdn">http://blog.csdn.net/student9128</string>
     <string name="jianshu">http://www.jianshu.com/u/904da1b86270</string>
     <string name="segment_fault">https://segmentfault.com/u/student9128/articles</string>
+    <!--第三方SDK的集成-->
+    <string-array name="site_3rd_party">
+        <item name="site_xgpush">http://blog.csdn.net/student9128/article/details/52264367</item>
+        <item name="site_jpush">http://blog.csdn.net/student9128/article/details/56495782</item>
+    </string-array>
+    <!--Material Design控件-->
+    <string-array name="site_material_design">
+        <item name="site_tool_bar">http://blog.csdn.net/student9128/article/details/53432737</item>
+        <item name="site_drawer_layout">http://blog.csdn.net/student9128/article/details/53247491</item>
+        <item name="site_navigation_view">http://blog.csdn.net/student9128/article/details/53314077</item>
+        <item name="site_snack_bar">http://blog.csdn.net/student9128/article/details/53268457</item>
+        <item name="site_bottom_navigation_bar">http://blog.csdn.net/student9128/article/details/53239087</item>
+        <item name="site_text_input_layout">http://blog.csdn.net/student9128/article/details/54091174</item>
+        <item name="site_text_input_edit_text">http://blog.csdn.net/student9128/article/details/54091174</item>
+        <item name="site_coordinator_layout">http://blog.csdn.net/student9128/article/details/53286799</item>
+    </string-array>
+    <!--关于页面的标题-->
     <string-array name="about_title">
         <item>Android-skin-support</item>
         <item>ExpandableTextView——Chen-Sir</item>
         <item>ExpandableTextView——Manabu-GT</item>
     </string-array>
+    <!--关于页面的网址-->
     <string-array name="about_text">
         <item>https://github.com/ximsfei/Android-skin-support</item>
         <item>https://github.com/Chen-Sir/ExpandableTextView</item>

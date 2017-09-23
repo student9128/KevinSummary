@@ -13,6 +13,7 @@ import com.mob.MobSDK;
 
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
 import skin.support.SkinCompatManager;
 import skin.support.app.SkinCardViewInflater;
 import skin.support.constraint.app.SkinConstraintViewInflater;
@@ -52,6 +53,9 @@ public class BaseApplication extends Application {
                 .loadSkin();
 
         MobSDK.init(this, Constants.MOB_APP_KEY, Constants.MOB_APP_SECRET);
+
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 
     public static boolean isBackground(Context context) {
