@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.kevin.tech.kevinsummary.constants.Constants;
 import com.mob.MobSDK;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.List;
 
@@ -56,6 +57,8 @@ public class BaseApplication extends Application {
 
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
+
+        CrashReport.initCrashReport(getApplicationContext(), Constants.BUGLY_APP_ID, false);
     }
 
     public static boolean isBackground(Context context) {

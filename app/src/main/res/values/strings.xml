@@ -19,6 +19,9 @@
     <string name="jianshu">http://www.jianshu.com/u/904da1b86270</string>
     <string name="segment_fault">https://segmentfault.com/u/student9128/articles</string>
     <string name="icon_url">https://github.com/student9128/KevinSummary/raw/0deb24b7368876f6dcb1f1eb00d4692024db9c94/app/src/main/res/mipmap-xxhdpi/ic_launcher.png</string>
+    <string name="site_activity">https://developer.android.google.cn/reference/android/app/Activity.html</string>
+    <string name="share_title">分享到</string>
+    <string name="introduction_app">Kevin Summary,a app for Android learning.用来记录Android学习过程中用到的一些东西的集成app。</string>
     <!--第三方SDK的集成-->
     <string-array name="site_3rd_party">
         <item name="site_xgpush">http://blog.csdn.net/student9128/article/details/52264367</item>
@@ -52,6 +55,7 @@
         <item>BroadCastReceiver</item>
         <item>Service</item>
         <item>ContentProvider</item>
+        <item>系统自带分享功能</item>
     </string-array>
     <string-array name="widget_item">
         <item>TextView</item>

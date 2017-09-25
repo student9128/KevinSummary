@@ -1,8 +1,10 @@
 package com.kevin.tech.kevinsummary.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.support.animation.SpringAnimation;
 import android.support.animation.SpringForce;
@@ -41,11 +43,14 @@ import com.kevin.tech.kevinsummary.fragment.ThirdFragment;
 import com.kevin.tech.kevinsummary.fragment.ToolFragment;
 import com.kevin.tech.kevinsummary.uitls.ColorUtils;
 import com.kevin.tech.kevinsummary.uitls.DateUtils;
+import com.kevin.tech.kevinsummary.uitls.FileUtils;
 import com.kevin.tech.kevinsummary.uitls.SPUtil;
 import com.kevin.tech.kevinsummary.view.NoSmoothViewPager;
 import com.kevin.tech.kevinsummary.view.RotateAnimation;
 import com.kevin.tech.kevinsummary.view.RoundedImageView;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -189,6 +194,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             tabLayout.getTabAt(i).setCustomView(mAdapter.getTabView(i));
         }
         initColor();
+        buildImage();
     }
 
     @Override
@@ -294,7 +300,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.action_share:
                 showToast("分享");
                 showShare();
-//                shareQ();
+//                showNativeShare();
                 break;
             default:
                 break;
@@ -546,6 +552,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
+    private void showNativeShare() {
+//        Intent textIntent = new Intent(Intent.ACTION_SEND);
+//        textIntent.setType("text/plain");
+//        textIntent.putExtra(Intent.EXTRA_TEXT, "这是一段分享的文字");
+//        startActivity(Intent.createChooser(textIntent, "分享"));
+
+//        Intent intent2 = new Intent(Intent.ACTION_SEND);
+        Uri avatar = Uri.fromFile(new File(FileUtils.directory + "avatar.png"));
+//        intent2.putExtra(Intent.EXTRA_STREAM, avatar);
+//        intent2.setType("image/*");
+//        startActivity(Intent.createChooser(intent2, "分享到"));
+        Uri launcher = Uri.fromFile(new File(FileUtils.directory + "launcher.png"));
+
+        ArrayList<Uri> uriList = new ArrayList<>();
+        uriList.add(avatar);
+        uriList.add(launcher);
+        Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList);
+        intent.setType("image/*");
+        startActivity(Intent.createChooser(intent, "分享到"));
+
+
+    }
+
     private void showShare() {
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
@@ -559,7 +589,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         oks.setTitleUrl(getString(R.string.csdn));
 //        // text是分享文本，所有平台都需要这个字段
         oks.setText("A app for Android Learning");
-        oks.setImageUrl("https://github.com/student9128/KevinSummary/raw/0deb24b7368876f6dcb1f1eb00d4692024db9c94/app/src/main/res/mipmap-xxhdpi/ic_launcher.png");
+        oks.setImageUrl(getString(R.string.icon_url));
 //        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
 //        oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
 //        // url仅在微信（包括好友和朋友圈）中使用
@@ -573,6 +603,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         // 启动分享GUI
         oks.show(this);
+    }
+
+    /**
+     * 在本地建立图片
+     */
+    private void buildImage() {
+        writeImage(R.drawable.ic_avatar, "avatar");
+        writeImage(R.mipmap.ic_launcher, "launcher");
+    }
+
+    private void writeImage(int resId, String name) {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resId);
+        try {
+            File file = new File(FileUtils.directory + name + ".png");
+            FileOutputStream out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

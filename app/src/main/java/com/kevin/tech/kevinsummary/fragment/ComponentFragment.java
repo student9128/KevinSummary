@@ -1,5 +1,6 @@
 package com.kevin.tech.kevinsummary.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,9 +10,12 @@ import android.view.animation.RotateAnimation;
 import android.widget.TextView;
 
 import com.kevin.tech.kevinsummary.R;
+import com.kevin.tech.kevinsummary.activity.WebViewActivity;
+import com.kevin.tech.kevinsummary.activity.components.NativeShareActivity;
 import com.kevin.tech.kevinsummary.adapter.RecyclerViewAdapter;
 import com.kevin.tech.kevinsummary.base.BaseFragment;
 import com.kevin.tech.kevinsummary.constants.Constants;
+import com.kevin.tech.kevinsummary.listener.OnItemClickListener;
 import com.kevin.tech.kevinsummary.view.widget.DividerItemDecoration;
 
 import butterknife.BindView;
@@ -24,7 +28,7 @@ import butterknife.BindView;
  */
 
 
-public class ComponentFragment extends BaseFragment {
+public class ComponentFragment extends BaseFragment implements OnItemClickListener {
     @BindView(R.id.text)
     TextView text;
     @BindView(R.id.rv_recycler_view)
@@ -61,7 +65,7 @@ public class ComponentFragment extends BaseFragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mActivity, DividerItemDecoration.VERTICAL_LIST);
         dividerItemDecoration.setDivider(R.drawable.bg_divider_recycler);
         rvRecyclerView.addItemDecoration(dividerItemDecoration);
-        mAdapter = new RecyclerViewAdapter(mActivity, stringArray,false);
+        mAdapter = new RecyclerViewAdapter(mActivity, stringArray, false);
         rvRecyclerView.setAdapter(mAdapter);
     }
 
@@ -72,7 +76,22 @@ public class ComponentFragment extends BaseFragment {
 
     @Override
     public void initListener() {
-
+        mAdapter.setOnItemClickListener(this);
     }
 
+    @Override
+    public void onRecyclerClick(int position) {
+        switch (position) {
+            case 0:
+                Intent intent = new Intent(mActivity, WebViewActivity.class);
+                intent.putExtra("url", getString(R.string.site_activity));
+                startActivity(intent);
+                break;
+            case 4:
+                startActivity(new Intent(mActivity, NativeShareActivity.class));
+                break;
+            default:
+                break;
+        }
+    }
 }
