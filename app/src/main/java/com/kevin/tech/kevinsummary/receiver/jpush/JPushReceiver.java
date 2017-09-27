@@ -1,4 +1,4 @@
-package com.kevin.tech.kevinsummary.jpush.receiver;
+package com.kevin.tech.kevinsummary.receiver.jpush;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

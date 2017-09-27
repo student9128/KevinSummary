@@ -1,6 +1,10 @@
 package com.kevin.tech.kevinsummary.activity.components;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.widget.Button;
 
@@ -10,6 +14,7 @@ import com.kevin.tech.kevinsummary.uitls.FileUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,6 +34,8 @@ public class NativeShareActivity extends BaseActivity {
     Button btnShareImage;
     @BindView(R.id.btn_share_multi)
     Button btnShareMulti;
+    @BindView(R.id.btn_share_custom)
+    Button btnShareCustom;
 
     @Override
     public int setLayoutResId() {
@@ -81,5 +88,48 @@ public class NativeShareActivity extends BaseActivity {
 
     }
 
+    @OnClick(R.id.btn_share_custom)
+    public void shareCustom() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        List<ResolveInfo> resInfo = getPackageManager().queryIntentActivities(
+                intent, 0);
+        if (!resInfo.isEmpty()) {
+            List<Intent> targetedShareIntents = new ArrayList<Intent>();
+            for (ResolveInfo info : resInfo) {
+                Intent targeted = new Intent(Intent.ACTION_SEND);
+                targeted.setType("text/plain");
+                ActivityInfo activityInfo = info.activityInfo;
 
+                PackageManager packageManager = getPackageManager();
+                try {
+                    String packageName = activityInfo.packageName;
+                    PackageInfo packageInfo = packageManager.getPackageInfo(packageName, 0);
+//                    int labelRes = packageInfo.applicationInfo.labelRes;
+                    String string = packageInfo.applicationInfo.loadLabel(getPackageManager()).toString();
+                    printLogd("----------" + packageName + "==" + string + "=========\t");
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+                //在这里可以添加相应的平台，用 || 连接
+//                if (activityInfo.packageName.contains("com.tencent.mm")) {
+//                    targeted.putExtra(Intent.EXTRA_TEXT, "分享内容");
+//                    targeted.setPackage(activityInfo.packageName);
+//                    targetedShareIntents.add(targeted);
+//                }
+            }
+//            Intent chooserIntent = Intent.createChooser(
+//                    targetedShareIntents.remove(0), "Select app to share");
+//            if (chooserIntent == null) {
+//                return;
+//            }
+//            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,
+//                    targetedShareIntents.toArray(new Parcelable[]{}));
+//            try {
+//                startActivity(chooserIntent);
+//            } catch (android.content.ActivityNotFoundException ex) {
+//                showToast("Can't find sharecomponent to share");
+//            }
+        }
+    }
 }

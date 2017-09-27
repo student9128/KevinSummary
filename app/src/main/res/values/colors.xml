@@ -36,9 +36,12 @@
     <color name="gray_7">#BDBDBD</color>
     <color name="gray_8">#36707070</color>
     <color name="gray_9">#5F7F7F7F</color>
-    <color name="gray_11">#BBFFFFFF</color>
-    <color name="gray_27">#ECECEC</color>
     <color name="gray_10">#24292E</color>
+    <color name="gray_11">#BBFFFFFF</color>
+    <color name="gray_12">#C8C8C8</color>
+    <color name="gray_13">#BBBBBB</color>
+    <color name="gray_14">#FAF0F0F0</color>
+    <color name="gray_27">#ECECEC</color>
 
     <color name="bg">#3f3F51B5</color>
     <color name="teal">#009688</color>

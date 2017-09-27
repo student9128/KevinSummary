@@ -37,3 +37,8 @@
 #腾讯Bugly
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
+
+#百度推送
+ -libraryjars libs/pushservice-VERSION.jar
+ -dontwarn com.baidu.**
+ -keep class com.baidu.**{*; }

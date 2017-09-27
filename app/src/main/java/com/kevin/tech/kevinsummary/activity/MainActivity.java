@@ -32,6 +32,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.kevin.tech.kevinsummary.R;
 import com.kevin.tech.kevinsummary.adapter.TabLayoutAdapter;
 import com.kevin.tech.kevinsummary.base.BaseActivity;
@@ -43,7 +45,6 @@ import com.kevin.tech.kevinsummary.fragment.ThirdFragment;
 import com.kevin.tech.kevinsummary.fragment.ToolFragment;
 import com.kevin.tech.kevinsummary.uitls.ColorUtils;
 import com.kevin.tech.kevinsummary.uitls.DateUtils;
-import com.kevin.tech.kevinsummary.uitls.FileUtils;
 import com.kevin.tech.kevinsummary.uitls.SPUtil;
 import com.kevin.tech.kevinsummary.view.NoSmoothViewPager;
 import com.kevin.tech.kevinsummary.view.RotateAnimation;
@@ -56,6 +57,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+
+import static com.kevin.tech.kevinsummary.uitls.FileUtils.directory;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener, DrawerLayout.DrawerListener {
 
@@ -141,6 +144,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         ivSign = (ImageView) headerView.findViewById(R.id.iv_sign);
         skin = SPUtil.getBooleanSP("skin", this);
 //        reduceMarginsInTabs(tabLayout, DisplayUtils.dip2px(this, 50));
+        PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, Constants.BAIDU_PUSH_API_KEY);
     }
 
     @Override
@@ -454,7 +458,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private void setTabUnSelectedState(TabLayout.Tab tab) {
         View customView = tab.getCustomView();
         TextView tabText = (TextView) customView.findViewById(R.id.tv_tab_text);
-        tabText.setTextColor(ContextCompat.getColor(this, R.color.white_1));
+        tabText.setTextColor(ContextCompat.getColor(this, R.color.gray_14));
         TextPaint tp = tabText.getPaint();
         tp.setFakeBoldText(false);
 
@@ -474,7 +478,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mBlueGreen = ColorUtils.getColorGreen(mBlueColor);
         mBlueBlue = ColorUtils.getColorBlue(mBlueColor);
 
-        mBlackColor = ColorUtils.getColor(this, R.color.white_1);
+        mBlackColor = ColorUtils.getColor(this, R.color.gray_14);
         mBlackRed = Color.red(mBlackColor);
         mBlackGreen = Color.green(mBlackColor);
         mBlackBlue = Color.blue(mBlackColor);
@@ -559,11 +563,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 //        startActivity(Intent.createChooser(textIntent, "分享"));
 
 //        Intent intent2 = new Intent(Intent.ACTION_SEND);
-        Uri avatar = Uri.fromFile(new File(FileUtils.directory + "avatar.png"));
+        Uri avatar = Uri.fromFile(new File(directory + "avatar.png"));
 //        intent2.putExtra(Intent.EXTRA_STREAM, avatar);
 //        intent2.setType("image/*");
 //        startActivity(Intent.createChooser(intent2, "分享到"));
-        Uri launcher = Uri.fromFile(new File(FileUtils.directory + "launcher.png"));
+        Uri launcher = Uri.fromFile(new File(directory + "launcher.png"));
 
         ArrayList<Uri> uriList = new ArrayList<>();
         uriList.add(avatar);
@@ -616,7 +620,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private void writeImage(int resId, String name) {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resId);
         try {
-            File file = new File(FileUtils.directory + name + ".png");
+            File dir = new File(directory);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            File file = new File(directory + name + ".png");
             FileOutputStream out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.flush();

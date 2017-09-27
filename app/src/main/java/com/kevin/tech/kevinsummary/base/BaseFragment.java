@@ -38,26 +38,22 @@ public abstract class BaseFragment extends AppBaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        printLogi("onAttach");
     }
 
     @Override
     public void onStart() {
         super.onStart();
 //        refreshUI();
-        printLogi("onStart");
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        printLogi("onCreate");
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        printLogi("onActivityCreated");
     }
 
     @Override

@@ -96,11 +96,11 @@ dependencies {
     compile 'skin.support:androidautolayout:1.4.5'
     //    < !-------------ExpandableTextView------------- >
     compile 'com.ms-square:expandableTextView:0.1.4'
-
     //集成极光推送
-    compile 'cn.jiguang.sdk:jpush:3.0.3'  // 此处以JPush 3.0.3 版本为例。
-    compile 'cn.jiguang.sdk:jcore:1.1.1'  // 此处以JCore 1.1.1 版本为例。
-
+    compile 'cn.jiguang.sdk:jpush:3.0.3'
+    // 此处以JPush 3.0.3 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.1.1'
+    // 此处以JCore 1.1.1 版本为例。
     //腾讯Bugly
     compile 'com.tencent.bugly:crashreport:2.6.5'
 }

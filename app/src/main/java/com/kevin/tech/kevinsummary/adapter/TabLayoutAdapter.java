@@ -81,7 +81,7 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
             mTabTitle.setScaleY(1.1f);
             tp.setFakeBoldText(true);
         } else {
-            mTabTitle.setTextColor(ContextCompat.getColor(mContext, R.color.white_1));
+            mTabTitle.setTextColor(ContextCompat.getColor(mContext, R.color.gray_14));
             tp.setFakeBoldText(false);
         }
         return view;

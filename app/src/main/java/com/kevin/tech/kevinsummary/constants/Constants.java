@@ -12,6 +12,7 @@ public class Constants {
     public static final String MOB_APP_KEY = "21034018268b5";
     public static final String MOB_APP_SECRET = "9815bc404c8e08b318553405c94b7a9b";
     public static final String BUGLY_APP_ID = "3a4d24d96f";
+    public static final String BAIDU_PUSH_API_KEY = "39Gq7pyPTgGsymVOxG5rSCtL";
 
     public static final String ARGS = "args";
     public static final String ENCODING = "UTF-8";

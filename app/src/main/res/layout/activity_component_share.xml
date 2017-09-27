@@ -23,4 +23,10 @@
         style="@style/btn_style"
         android:layout_marginTop="@dimen/margin_10"
         android:text="分享多张图片" />
+
+    <Button
+        android:id="@+id/btn_share_custom"
+        style="@style/btn_style"
+        android:layout_marginTop="@dimen/margin_10"
+        android:text="自定义分享" />
 </LinearLayout>
