@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.kevin.tech.kevinsummary.R;
 import com.kevin.tech.kevinsummary.view.AnyTextView;
+import com.umeng.message.PushAgent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,6 +54,8 @@ public abstract class BaseActivity extends AppBaseActivity {
         initView();
         initData();
         initListener();
+        /********友盟推送**********/
+        PushAgent.getInstance(this).onAppStart();
     }
 
     public abstract int setLayoutResId();

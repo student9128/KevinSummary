@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/tool_bar" />
+
+    <Button
+        android:id="@+id/btn_effect_1"
+        style="@style/btn_style"
+        android:layout_marginTop="@dimen/margin_20"
+        android:text="效果一" />
+
+    <Button
+        android:id="@+id/btn_effect_2"
+        style="@style/btn_style"
+        android:layout_marginTop="@dimen/margin_10"
+        android:text="效果二" />
+
+    <Button
+        android:id="@+id/btn_effect_3"
+        style="@style/btn_style"
+        android:layout_marginTop="@dimen/margin_10"
+        android:text="效果三" />
+</LinearLayout>

@@ -4,6 +4,7 @@ import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.graphics.EmbossMaskFilter;
 import android.graphics.drawable.Drawable;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -43,6 +44,8 @@ public class TextViewActivity extends BaseActivity {
     ExpandableTextView etvExpandableText;
     @BindView(R.id.expand_text_view)
     com.ms.square.android.expandabletextview.ExpandableTextView expandTextView;
+    @BindView(R.id.text_view)
+    TextView textView;
     @BindView(R.id.text_view_1)
     TextView textView1;
     @BindView(R.id.text_view_2)
@@ -96,6 +99,10 @@ public class TextViewActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        textView.setText(
+                Html.fromHtml(getResources().getString(R.string.link_text_manual)));
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+
         SpannableString spannableString = new SpannableString("Hello==========");
         MaskFilterSpan maskFilterSpan1 = new MaskFilterSpan(new BlurMaskFilter(2, BlurMaskFilter.Blur.OUTER));
         spannableString.setSpan(maskFilterSpan1, 0, 3, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);

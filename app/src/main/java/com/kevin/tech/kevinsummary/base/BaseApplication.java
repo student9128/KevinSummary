@@ -9,8 +9,11 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.kevin.tech.kevinsummary.constants.Constants;
+import com.kevin.tech.kevinsummary.uitls.LogK;
 import com.mob.MobSDK;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
 
 import java.util.List;
 
@@ -53,12 +56,33 @@ public class BaseApplication extends Application {
 //                .setSkinWindowBackgroundEnable(false)                   // 关闭windowBackground换肤，默认打开[可选]
                 .loadSkin();
 
+        /********MOB分享**********/
         MobSDK.init(this, Constants.MOB_APP_KEY, Constants.MOB_APP_SECRET);
 
+        /********极光推送**********/
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
 
+        /********腾讯Bugly**********/
         CrashReport.initCrashReport(getApplicationContext(), Constants.BUGLY_APP_ID, false);
+
+        /********友盟推送**********/
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+//注册推送服务，每次调用register方法都会回调该接口
+        mPushAgent.register(new IUmengRegisterCallback() {
+
+            @Override
+            public void onSuccess(String deviceToken) {
+                //注册成功会返回device token
+                LogK.d("umeng", "==============注册成功===============：\t" + deviceToken);
+            }
+
+            @Override
+            public void onFailure(String s, String s1) {
+                LogK.d("umeng", "===============注册失败=============：\t" + s+"=---="+s1);
+
+            }
+        });
     }
 
     public static boolean isBackground(Context context) {

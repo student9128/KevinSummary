@@ -52,6 +52,16 @@
             </com.ms.square.android.expandabletextview.ExpandableTextView>
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autoLink="all"
+                android:text="@string/auto_link" />
+
+            <TextView
+                android:id="@+id/text_view"
+                style="@style/activity_text_view_style" />
+
+            <TextView
                 android:id="@+id/text_view_1"
                 style="@style/activity_text_view_style" />
 

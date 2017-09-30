@@ -21,4 +21,29 @@
         <item name="color">@color/white</item>
     </style>
 
+
+    <style name="MaterialDesignActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="actionOverflowMenuStyle">@style/OverflowStyle</item>
+        <item name="android:actionMenuTextAppearance">@style/OverFlowMenuTextStyle</item>
+    </style>
+
+    <!--menu text style-->
+    <style name="OverFlowMenuTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!--overflow menu style-->
+    <style name="OverflowStyle" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>
+        <item name="android:popupBackground">@color/colorPrimary</item>
+        <item name="android:dropDownVerticalOffset">4dp</item>
+        <item name="android:dropDownHorizontalOffset">0dp</item>
+    </style>
+
 </resources>

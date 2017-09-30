@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import com.kevin.tech.kevinsummary.R;
 import com.kevin.tech.kevinsummary.activity.WebViewActivity;
+import com.kevin.tech.kevinsummary.activity.material.BottomNavigationBarActivity;
+import com.kevin.tech.kevinsummary.activity.material.CoordinatorLayoutActivity;
+import com.kevin.tech.kevinsummary.activity.material.MaterialDesignActivity;
 import com.kevin.tech.kevinsummary.adapter.RecyclerViewAdapter;
 import com.kevin.tech.kevinsummary.base.BaseFragment;
 import com.kevin.tech.kevinsummary.constants.Constants;
@@ -88,7 +91,25 @@ public class MaterialFragment extends BaseFragment implements OnItemClickListene
 
     @Override
     public void showEffectActivity(int position) {
-        showToast("展示效果" + position);
+        switch (position) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 5:
+            case 6:
+                startActivity(new Intent(mActivity, MaterialDesignActivity.class));
+                break;
+            case 4:
+                startActivity(new Intent(mActivity, BottomNavigationBarActivity.class));
+                break;
+            case 7:
+                startActivity(new Intent(mActivity, CoordinatorLayoutActivity.class));
+                break;
+            default:
+                break;
+
+        }
     }
 }
 

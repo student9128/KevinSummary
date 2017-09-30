@@ -55,6 +55,12 @@
         <!-- 弹出层水平方向上的偏移，即距离屏幕左边的距离，负值会导致右边出现空隙 -->
         <item name="android:dropDownHorizontalOffset">-1dp</item>
     </style>
+
+    <style name="counterOverflowTextColor" parent="Base.TextAppearance.AppCompat.Widget.PopupMenu.Small">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">12dp</item>
+    </style>
     <!-- TextViewActivity-->
     <style name="activity_text_view_style">
         <item name="android:textSize">@dimen/textSize18</item>
