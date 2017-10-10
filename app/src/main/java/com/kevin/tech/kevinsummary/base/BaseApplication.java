@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.kevin.tech.kevinsummary.constants.Constants;
 import com.kevin.tech.kevinsummary.uitls.LogK;
 import com.mob.MobSDK;
@@ -56,6 +57,9 @@ public class BaseApplication extends Application {
 //                .setSkinWindowBackgroundEnable(false)                   // 关闭windowBackground换肤，默认打开[可选]
                 .loadSkin();
 
+        /********百度地图**********/
+        SDKInitializer.initialize(getApplicationContext());//百度地图初始化
+
         /********MOB分享**********/
         MobSDK.init(this, Constants.MOB_APP_KEY, Constants.MOB_APP_SECRET);
 
@@ -79,7 +83,7 @@ public class BaseApplication extends Application {
 
             @Override
             public void onFailure(String s, String s1) {
-                LogK.d("umeng", "===============注册失败=============：\t" + s+"=---="+s1);
+                LogK.d("umeng", "===============注册失败=============：\t" + s + "=---=" + s1);
 
             }
         });

@@ -7,12 +7,13 @@
     <!--<color name="colorPrimaryDark">#0E9870</color>-->
     <!--<color name="colorAccent">#f9621f</color>-->
     <color name="colorPrimary">#F44336</color>
+    <!--<color name="colorPrimary">#77ADDC</color>-->
     <color name="colorPrimaryDark">#D32F2F</color>
     <color name="colorAccent">#FF5252</color>
     <color name="colorPrimary_night">#2196F3</color>
     <color name="colorPrimaryDark_night">#1976D2</color>
     <color name="colorAccent_night">#448AFF</color>
-
+    <color name="mapColor">#20FF5252</color>
     <color name="white">#ffffff</color>
     <color name="white_night">#ffffff</color>
     <color name="white_3">#F0F0F0</color>

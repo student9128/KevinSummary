@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.kevin.tech.kevinsummary.R;
+import com.kevin.tech.kevinsummary.activity.thirdparty.BaiduMapActivity;
 import com.kevin.tech.kevinsummary.listener.OnItemClickListener;
 import com.kevin.tech.kevinsummary.activity.WebViewActivity;
 import com.kevin.tech.kevinsummary.adapter.RecyclerViewAdapter;
@@ -57,7 +58,7 @@ public class ThirdFragment extends BaseFragment implements OnItemClickListener {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mActivity, DividerItemDecoration.VERTICAL_LIST);
         dividerItemDecoration.setDivider(R.drawable.bg_divider_recycler);
         rvRecyclerView.addItemDecoration(dividerItemDecoration);
-        mAdapter = new RecyclerViewAdapter(mActivity, stringArray,false);
+        mAdapter = new RecyclerViewAdapter(mActivity, stringArray, false);
         rvRecyclerView.setAdapter(mAdapter);
     }
 
@@ -74,9 +75,13 @@ public class ThirdFragment extends BaseFragment implements OnItemClickListener {
 
     @Override
     public void onRecyclerClick(int position) {
-        String[] stringArray = getResources().getStringArray(R.array.site_material_design);
-        Intent intent = new Intent(mActivity, WebViewActivity.class);
-        intent.putExtra("url", stringArray[position]);
-        startActivity(intent);
+        if (11 == position) {
+            startActivity(new Intent(mActivity, BaiduMapActivity.class));
+        } else {
+            String[] stringArray = getResources().getStringArray(R.array.site_3rd_party);
+            Intent intent = new Intent(mActivity, WebViewActivity.class);
+            intent.putExtra("url", stringArray[position]);
+            startActivity(intent);
+        }
     }
 }
