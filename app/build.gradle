@@ -53,7 +53,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -61,6 +61,12 @@ android {
 //            signingConfig signingConfigs.release
 //            minifyEnabled false
         }
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs' //就是你放aar的目录地址
     }
 }
 
@@ -105,4 +111,7 @@ dependencies {
     compile 'com.tencent.bugly:crashreport:2.6.5'
     implementation project(':PushSDK')
     implementation 'com.ashokvarma.android:bottom-navigation-bar:2.0.2'
+//Mob SMSSDK
+    compile name: 'SMSSDK-3.0.0', ext: 'aar'
+    compile name: 'SMSSDKGUI-3.0.0', ext: 'aar'
 }

@@ -33,15 +33,23 @@
 -dontwarn com.mob.**
 -dontwarn cn.sharesdk.**
 -dontwarn **.R$*
+# Mob SMSSDK
+-dontwarn com.mob.**
+-keep class com.mob.**{*;}
+
+-dontwarn cn.smssdk.**
+-keep class cn.smssdk.**{*;}
 
 #腾讯Bugly
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
 
 #百度推送
- -libraryjars libs/pushservice-VERSION.jar
+# -libraryjars libs/pushservice-2.7.jar
  -dontwarn com.baidu.**
  -keep class com.baidu.**{*; }
+ #友盟SDK
+ -keep class com.umeng.commonsdk.** {*;}
  #友盟推送
  -dontwarn com.taobao.**
  -dontwarn anet.channel.**

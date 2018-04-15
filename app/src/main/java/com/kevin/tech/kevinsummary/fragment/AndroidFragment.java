@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.kevin.tech.kevinsummary.R;
+import com.kevin.tech.kevinsummary.activity.widget.RecyclerViewActivity;
 import com.kevin.tech.kevinsummary.listener.OnItemClickListener;
 import com.kevin.tech.kevinsummary.activity.widget.ListViewActivity;
 import com.kevin.tech.kevinsummary.activity.widget.TextViewActivity;
@@ -86,6 +87,9 @@ public class AndroidFragment extends BaseFragment implements OnItemClickListener
                 break;
             case 1:
                 startActivity(new Intent(mActivity, ListViewActivity.class));
+                break;
+            case 2:
+                startActivity(new Intent(mActivity, RecyclerViewActivity.class));
                 break;
             default:
                 break;

@@ -5,7 +5,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -38,7 +37,6 @@ import com.kevin.tech.kevinsummary.R;
 import com.kevin.tech.kevinsummary.base.BaseActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by <a href="http://blog.csdn.net/student9128">Kevin</a> on 2017/10/9.
@@ -365,12 +363,6 @@ public class BaiduMapActivity extends BaseActivity implements SensorEventListene
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     @Override
     public void onMapClick(LatLng latLng) {
@@ -444,7 +436,7 @@ public class BaiduMapActivity extends BaseActivity implements SensorEventListene
                 LatLng ll = new LatLng(location.getLatitude(),
                         location.getLongitude());
                 MapStatus.Builder builder = new MapStatus.Builder();
-                builder.target(ll).zoom(15.0f);
+                builder.target(ll).zoom(18.0f);
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
             }
         }

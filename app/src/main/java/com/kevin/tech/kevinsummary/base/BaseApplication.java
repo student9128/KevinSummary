@@ -2,7 +2,6 @@ package com.kevin.tech.kevinsummary.base;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
@@ -11,8 +10,10 @@ import android.util.Log;
 import com.baidu.mapapi.SDKInitializer;
 import com.kevin.tech.kevinsummary.constants.Constants;
 import com.kevin.tech.kevinsummary.uitls.LogK;
+import com.mob.MobApplication;
 import com.mob.MobSDK;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 
@@ -32,7 +33,7 @@ import skin.support.design.app.SkinMaterialViewInflater;
  */
 
 
-public class BaseApplication extends Application {
+public class BaseApplication extends MobApplication {
     private static Context mContext;
     public static int stateCount;
 
@@ -70,6 +71,19 @@ public class BaseApplication extends Application {
         /********腾讯Bugly**********/
         CrashReport.initCrashReport(getApplicationContext(), Constants.BUGLY_APP_ID, false);
 
+        /********友盟SDK初始化**********/
+        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, Constants.UMENG_APP_SECRET);
+        /**
+         * 设置组件化的Log开关
+         * 参数: boolean 默认为false，如需查看LOG设置为true
+         */
+        UMConfigure.setLogEnabled(true);
+        /**
+         * 设置日志加密
+         * 参数：boolean 默认为false（不加密）
+         */
+        UMConfigure.setEncryptEnabled(true);
+
         /********友盟推送**********/
         PushAgent mPushAgent = PushAgent.getInstance(this);
 //注册推送服务，每次调用register方法都会回调该接口
@@ -87,6 +101,7 @@ public class BaseApplication extends Application {
 
             }
         });
+
     }
 
     public static boolean isBackground(Context context) {
