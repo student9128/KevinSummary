@@ -11,7 +11,7 @@ def RELEASE_STORE_FILE = file('s.keystore.temp')
 
 Properties properties = new Properties()
 // local.properties file in the root director
-properties.load(project.rootProject.file('key.properties').newDataInputStream())
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 keystoreFilepath = properties.getProperty("RELEASE_STORE_FILE")
 
 if (keystoreFilepath) {
