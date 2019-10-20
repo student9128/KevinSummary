@@ -28,11 +28,7 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.search.geocode.GeoCodeResult;
-import com.baidu.mapapi.search.geocode.GeoCoder;
-import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
-import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
-import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+
 import com.kevin.tech.kevinsummary.R;
 import com.kevin.tech.kevinsummary.base.BaseActivity;
 
@@ -379,27 +375,27 @@ public class BaiduMapActivity extends BaseActivity implements SensorEventListene
 //在地图上添加Marker，并显示
         mBaiduMap.addOverlay(option);
 
-
-        //实例化一个地理编码查询对象
-        GeoCoder geoCoder = GeoCoder.newInstance();
-        //设置反地理编码位置坐标
-        ReverseGeoCodeOption op = new ReverseGeoCodeOption();
-        op.location(latLng);
-        //发起反地理编码请求(经纬度->地址信息)
-        geoCoder.reverseGeoCode(op);
-        geoCoder.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
-
-            @Override
-            public void onGetReverseGeoCodeResult(ReverseGeoCodeResult arg0) {
-                //获取点击的坐标地址
-                String address = arg0.getAddress();
-                Log.e("[address]====", address);
-            }
-
-            @Override
-            public void onGetGeoCodeResult(GeoCodeResult arg0) {
-            }
-        });
+//
+//        //实例化一个地理编码查询对象
+//        GeoCoder geoCoder = GeoCoder.newInstance();
+//        //设置反地理编码位置坐标
+//        ReverseGeoCodeOption op = new ReverseGeoCodeOption();
+//        op.location(latLng);
+//        //发起反地理编码请求(经纬度->地址信息)
+//        geoCoder.reverseGeoCode(op);
+//        geoCoder.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
+//
+//            @Override
+//            public void onGetReverseGeoCodeResult(ReverseGeoCodeResult arg0) {
+//                //获取点击的坐标地址
+//                String address = arg0.getAddress();
+//                Log.e("[address]====", address);
+//            }
+//
+//            @Override
+//            public void onGetGeoCodeResult(GeoCodeResult arg0) {
+//            }
+//        });
 //        double m = calculate(myLatLng, point);
 //        Log.e("距离距离：", m + "");
 

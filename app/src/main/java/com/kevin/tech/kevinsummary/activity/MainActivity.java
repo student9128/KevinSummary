@@ -58,8 +58,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.sharesdk.onekeyshare.OnekeyShare;
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
+
 
 import static com.kevin.tech.kevinsummary.uitls.FileUtils.directory;
 
@@ -115,7 +114,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private int mRedGreen;
     private int mRedBlue;
     private Boolean skin;
-    private EventHandler eventHandler;
+//    private EventHandler eventHandler;
 
     @Override
     public int setLayoutResId() {
@@ -151,26 +150,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, Constants.BAIDU_PUSH_API_KEY);
 
 
-        // 如果希望在读取通信录的时候提示用户，可以添加下面的代码，并且必须在其他代码调用之前，否则不起作用；如果没这个需求，可以不加这行代码
-        SMSSDK.setAskPermisionOnReadContact(true);
-
-        // 创建EventHandler对象
-        eventHandler = new EventHandler() {
-            public void afterEvent(int event, int result, Object data) {
-                if (data instanceof Throwable) {
-                    Throwable throwable = (Throwable)data;
-                    String msg = throwable.getMessage();
-                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-                } else {
-                    if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-                        // 处理你自己的逻辑
-                    }
-                }
-            }
-        };
-
-        // 注册监听器
-        SMSSDK.registerEventHandler(eventHandler);
+//        // 如果希望在读取通信录的时候提示用户，可以添加下面的代码，并且必须在其他代码调用之前，否则不起作用；如果没这个需求，可以不加这行代码
+//        SMSSDK.setAskPermisionOnReadContact(true);
+//
+//        // 创建EventHandler对象
+//        eventHandler = new EventHandler() {
+//            public void afterEvent(int event, int result, Object data) {
+//                if (data instanceof Throwable) {
+//                    Throwable throwable = (Throwable)data;
+//                    String msg = throwable.getMessage();
+//                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+//                } else {
+//                    if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+//                        // 处理你自己的逻辑
+//                    }
+//                }
+//            }
+//        };
+//
+//        // 注册监听器
+//        SMSSDK.registerEventHandler(eventHandler);
     }
 
     @Override
@@ -663,7 +662,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
     protected void onDestroy() {
         super.onDestroy();
-        SMSSDK.unregisterEventHandler(eventHandler);
+//        SMSSDK.unregisterEventHandler(eventHandler);
     }
 
 }

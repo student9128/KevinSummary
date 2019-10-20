@@ -13,7 +13,6 @@ import com.kevin.tech.kevinsummary.uitls.LogK;
 import com.mob.MobApplication;
 import com.mob.MobSDK;
 import com.tencent.bugly.crashreport.CrashReport;
-import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 
@@ -72,17 +71,17 @@ public class BaseApplication extends MobApplication {
         CrashReport.initCrashReport(getApplicationContext(), Constants.BUGLY_APP_ID, false);
 
         /********友盟SDK初始化**********/
-        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, Constants.UMENG_APP_SECRET);
-        /**
-         * 设置组件化的Log开关
-         * 参数: boolean 默认为false，如需查看LOG设置为true
-         */
-        UMConfigure.setLogEnabled(true);
-        /**
-         * 设置日志加密
-         * 参数：boolean 默认为false（不加密）
-         */
-        UMConfigure.setEncryptEnabled(true);
+//        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, Constants.UMENG_APP_SECRET);
+//        /**
+//         * 设置组件化的Log开关
+//         * 参数: boolean 默认为false，如需查看LOG设置为true
+//         */
+//        UMConfigure.setLogEnabled(true);
+//        /**
+//         * 设置日志加密
+//         * 参数：boolean 默认为false（不加密）
+//         */
+//        UMConfigure.setEncryptEnabled(true);
 
         /********友盟推送**********/
         PushAgent mPushAgent = PushAgent.getInstance(this);
